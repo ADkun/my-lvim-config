@@ -1017,6 +1017,15 @@ lvim.plugins = {
 			require("telescope").load_extension("harpoon")
 		end,
 	},
+	{
+		"winston0410/range-highlight.nvim",
+		dependencies = { "winston0410/cmd-parser.nvim" },
+		lazy = true,
+		event = { "User FileOpened" },
+		config = function()
+			require("range-highlight").setup({})
+		end,
+	},
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
