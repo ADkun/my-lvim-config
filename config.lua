@@ -1149,6 +1149,11 @@ lvim.plugins = {
 			})
 		end,
 	},
+	{
+		"sitiom/nvim-numbertoggle",
+		lazy = true,
+		event = { "User FileOpened" },
+	},
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
