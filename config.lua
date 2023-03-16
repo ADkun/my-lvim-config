@@ -1122,6 +1122,27 @@ lvim.plugins = {
 			})
 		end,
 	},
+	{
+		"chrisgrieser/nvim-recorder",
+		lazy = true,
+		event = { "User FileOpened" },
+		config = function()
+			require("recorder").setup({
+				slots = { "u", "i", "o" },
+				mapping = {
+					startStopRecording = "q",
+					playMacro = "Q",
+					switchSlot = "<A-q>",
+					editMacro = "cq",
+					yankMacro = "yq",
+					addBreakPoint = "##",
+				},
+				-- clear = false,
+				-- logLevel = vim.log.levels.INFO,
+				-- dapSharedKeymaps = false,
+			})
+		end,
+	},
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>

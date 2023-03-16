@@ -46,6 +46,7 @@
   "nvim-lspconfig": { "branch": "master", "commit": "2ba6e268d92934e14fe561fe446a49540803e57f" },
   "nvim-navic": { "branch": "master", "commit": "cdd24539bcf114a499827e9b32869fe74836efe7" },
   "nvim-notify": { "branch": "master", "commit": "02047199e2752223c77c624160f720ca227944a9" },
+  "nvim-recorder": { "branch": "main", "commit": "89c1fb1139fac0a4b42faf54beaf363be104550b" },
   "nvim-spectre": { "branch": "master", "commit": "201ccd1f6ce98a4e509359c8994e111a52a02515" },
   "nvim-tree.lua": { "branch": "master", "commit": "bbb6d4891009de7dab05ad8fc2d39f272d7a751c" },
   "nvim-treesitter": { "branch": "master", "commit": "fc1ca10bfbdee17e29374d0d1bac8ea030539dc3" },
