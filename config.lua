@@ -66,6 +66,15 @@ lvim.builtin.which_key.mappings["o"] = {
 	c = { "<cmd>pwd<CR>", "Show Current Folder" },
 	o = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" },
 	i = { "<cmd>LspInstall<cr>", "LspInstall" },
+	h = {
+		name = "+Harpoon",
+		f = { ":lua require('harpoon.mark').add_file()<cr>", "Add File" },
+		t = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" },
+		n = { ":lua require('harpoon.ui').nav_next()<cr>", "Next" },
+		p = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev" },
+		h = { ":Telescope harpoon marks<cr>", "Telescope Harpoon" },
+		d = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" },
+	},
 }
 lvim.builtin.which_key.mappings["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
 lvim.builtin.which_key.mappings["z"] = {
@@ -985,6 +994,27 @@ lvim.plugins = {
 			map("x", "<C-j>", "<Plug>GoVSDDown", { noremap = true, silent = true })
 			map("x", "<C-k>", "<Plug>GoVSDUp", { noremap = true, silent = true })
 			map("x", "<C-l>", "<Plug>GoVSDRight", { noremap = true, silent = true })
+		end,
+	},
+	{
+		"ThePrimeagen/harpoon",
+		lazy = true,
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("harpoon").setup({
+				-- global_settings = {
+				--     save_on_toggle = false,
+				--     save_on_change = true,
+				--     enter_sendcmd = false,
+				--     tmux_autoclose_windows = false,
+				--     excluded_filetypes = { "harpoon"},
+				--     mark_branch = false,
+				-- }
+			})
+			require("telescope").load_extension("harpoon")
 		end,
 	},
 }
