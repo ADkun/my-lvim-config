@@ -438,14 +438,17 @@ lvim.plugins = {
 	{ -- dot
 		"tpope/vim-repeat",
 		lazy = true,
+		keys = { "." },
 		event = { "User FileOpened" },
 	},
 	{
-		"tpope/vim-surround",
-		-- "csxx" "dsxx"
+		"kylechui/nvim-surround",
+		-- ysiw)  ys$" ds]  cs'" dsf
 		lazy = true,
 		keys = { "c", "d", "y" },
-		event = "User FileOpened",
+		config = function()
+			require("nvim-surround").setup({})
+		end,
 	},
 	{
 		"windwp/nvim-spectre",
