@@ -284,7 +284,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Smart Panel
 		"folke/trouble.nvim",
 		lazy = true,
 		cmd = { "TroubleToggle", "Trouble", "TroubleRefresh" },
@@ -341,8 +340,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Bracket pair rainbow colorize
 		"mrjones2014/nvim-ts-rainbow",
+		-- Bracket pair rainbow colorize
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -350,8 +349,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Show context of code such as function name, class name, labels
 		"romgrk/nvim-treesitter-context",
+		-- Show context of code such as function name, class name, labels
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -370,7 +369,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Colors
 		"folke/lsp-colors.nvim",
 		lazy = true,
 		event = { "User FileOpened" },
@@ -379,7 +377,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Show function signature hint
 		"ray-x/lsp_signature.nvim",
 		lazy = true,
 		event = { "User FileOpened" },
@@ -388,13 +385,11 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Auto set commentstring base on your cursor
 		"JoosepAlviste/nvim-ts-context-commentstring",
 		lazy = true,
 		event = { "User FileOpened" },
 	},
 	{
-		-- Preview goto page
 		"rmagatti/goto-preview",
 		lazy = true,
 		event = { "User FileOpened" },
@@ -415,7 +410,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Remember last place
 		"ethanholz/nvim-lastplace",
 		lazy = true,
 		event = { "User FileOpened" },
@@ -433,8 +427,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
 		"folke/todo-comments.nvim",
+		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -447,15 +441,15 @@ lvim.plugins = {
 		event = { "User FileOpened" },
 	},
 	{
-		-- csxx
 		"tpope/vim-surround",
+		-- "csxx" "dsxx"
 		lazy = true,
 		keys = { "c", "d", "y" },
 		event = "User FileOpened",
 	},
 	{
-		-- Replace all
 		"windwp/nvim-spectre",
+		-- Replace all
 		lazy = true,
 		cmd = { "Spectre" },
 		config = function()
@@ -463,12 +457,9 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Add some function to quickfix & loclist
-		-- <C-S>: Split
-		-- <C-O>: Toggle all
 		"kevinhwang91/nvim-bqf",
+		-- quickfix preview and other functions
 		lazy = true,
-		-- event = { "BufRead", "BufNew" },
 		event = { "WinNew" },
 		config = function()
 			require("bqf").setup({
@@ -513,8 +504,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Highlight, jump between pairs like if..else
 		"andymass/vim-matchup",
+		-- Highlight, jump between pairs like if..else
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -523,8 +514,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Restore last session of current dir
 		"folke/persistence.nvim",
+		-- Restore last session of current dir
 		lazy = true,
 		event = "BufReadPre", -- this will only start session saving when an actual file was opened
 		config = function()
@@ -536,8 +527,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Custom keys to exit normal_mode
 		"max397574/better-escape.nvim",
+		-- Custom keys to exit normal_mode
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -550,8 +541,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Use <Tab> jump out of quotes
 		"abecodes/tabout.nvim",
+		-- Use <Tab> jump out of quotes
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -586,7 +577,6 @@ lvim.plugins = {
 		after = { "nvim-cmp" },
 	},
 	{
-		-- Yank from any circumstance
 		"ibhagwan/smartyank.nvim",
 		lazy = true,
 		event = { "User FileOpened" },
@@ -595,8 +585,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		-- Show and jump to marks
 		"chentoast/marks.nvim",
+		-- Marks management
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
