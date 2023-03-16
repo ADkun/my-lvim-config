@@ -772,12 +772,14 @@ lvim.plugins = {
 				end
 			end)
 
+			vim.cmd([[highlight AdCustomFold guifg=#bf8040]])
 			local handler = function(virtText, lnum, endLnum, width, truncate)
 				local newVirtText = {}
 				local suffix = ("  %d "):format(endLnum - lnum)
 				local sufWidth = vim.fn.strdisplaywidth(suffix)
 				local targetWidth = width - sufWidth
 				local curWidth = 0
+
 				for _, chunk in ipairs(virtText) do
 					local chunkText = chunk[1]
 					local chunkWidth = vim.fn.strdisplaywidth(chunkText)
@@ -796,7 +798,21 @@ lvim.plugins = {
 					end
 					curWidth = curWidth + chunkWidth
 				end
+
+				-- Second line
+				local lines = vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, false)
+				local secondLine = nil
+				if #lines == 1 then
+					secondLine = lines[1]
+				elseif #lines > 1 then
+					secondLine = lines[2]
+				end
+				if secondLine ~= nil then
+					table.insert(newVirtText, { secondLine, "AdCustomFold" })
+				end
+
 				table.insert(newVirtText, { suffix, "MoreMsg" })
+
 				return newVirtText
 			end
 
