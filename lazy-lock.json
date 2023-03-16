@@ -63,6 +63,7 @@
   "promise-async": { "branch": "main", "commit": "7fa127fa80e7d4d447e0e2c78e99af4355f4247b" },
   "range-highlight.nvim": { "branch": "master", "commit": "8b5e8ccb3460b2c3675f4639b9f54e64eaab36d9" },
   "schemastore.nvim": { "branch": "main", "commit": "42e12c5a76a9b7acf6694841a0c8fab07ce90926" },
+  "search-replace.nvim": { "branch": "main", "commit": "b3485c9cd14319c5320bbdd74af0b3c67733490d" },
   "smartyank.nvim": { "branch": "master", "commit": "7e3905578f646503525b2f7018b8afd17861018c" },
   "specs.nvim": { "branch": "main", "commit": "2743e412bbe21c9d73954c403d01e8de7377890d" },
   "structlog.nvim": { "branch": "main", "commit": "45b26a2b1036bb93c0e83f4225e85ab3cee8f476" },

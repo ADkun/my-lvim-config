@@ -31,9 +31,10 @@ lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["ga"] = ":EasyAlign<CR>"
 lvim.keys.visual_mode["ga"] = ":EasyAlign<CR>"
 
-lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
-lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["o"] = {
+local keymap = lvim.builtin.which_key.mappings
+keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+keymap["o"] = {
 	name = "+Custom",
 	w = { get_cmd("setlocal wrap!"), "Toggle Soft Wrap" },
 	s = {
@@ -76,23 +77,22 @@ lvim.builtin.which_key.mappings["o"] = {
 		d = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" },
 	},
 }
-lvim.builtin.which_key.mappings["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
-lvim.builtin.which_key.mappings["z"] = {
+keymap["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
+keymap["z"] = {
 	name = "+Windows",
 	m = { get_cmd("WindowsMaximize"), "Window Maximize" },
 	v = { get_cmd("WindowsMaximizeVertically"), "Window Vertically Maximize" },
 	h = { get_cmd("WindowsMaximizeHorizontally"), "Window Horizontally Maximize" },
 	e = { get_cmd("WindowsEqualize"), "Window Equalize" },
 }
-lvim.builtin.which_key.mappings["a"] =
-	{ get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
-lvim.builtin.which_key.mappings["S"] = {
+keymap["a"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
+keymap["S"] = {
 	name = "+Session",
 	c = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" },
 	l = { get_cmd("lua require('persistence').load({ last = true })"), "Restore last session" },
 	Q = { get_cmd("lua require('persistence').stop()"), "Quit without saving session" },
 }
-lvim.builtin.which_key.mappings["t"] = {
+keymap["t"] = {
 	name = "Diagnostics",
 	t = { "<cmd>TroubleToggle<cr>", "trouble" },
 	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
@@ -101,6 +101,30 @@ lvim.builtin.which_key.mappings["t"] = {
 	l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
 	r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
+-- search.replace.nvim config BEGIN
+keymap["r"] = {
+	name = "SearchReplaceSingleBuffer",
+	s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
+	o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
+	w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
+	W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
+	e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
+	f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
+	b = {
+		name = "SearchReplaceMultiBuffer",
+		s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
+		o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
+		w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
+		W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
+		e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
+		f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
+	},
+}
+lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
+lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
+lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
+vim.o.inccommand = "split"
+-- search.replace.nvim config END
 
 -- -- Change theme settings
 -- lvim.colorscheme = "one_monokai"
@@ -1024,6 +1048,17 @@ lvim.plugins = {
 		event = { "User FileOpened" },
 		config = function()
 			require("range-highlight").setup({})
+		end,
+	},
+	{
+		"roobert/search-replace.nvim",
+		lazy = true,
+		event = { "User FileOpened" },
+		config = function()
+			require("search-replace").setup({
+				default_replace_single_buffer_options = "gcI",
+				default_replace_multi_buffer_options = "egcI",
+			})
 		end,
 	},
 }
