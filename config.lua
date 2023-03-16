@@ -439,7 +439,6 @@ lvim.plugins = {
 		"tpope/vim-repeat",
 		lazy = true,
 		keys = { "." },
-		event = { "User FileOpened" },
 	},
 	{
 		"kylechui/nvim-surround",
