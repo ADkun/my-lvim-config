@@ -56,6 +56,8 @@ keymap["o"] = {
 		n = { get_cmd("Notifications"), "Show Notifications" },
 		t = { get_cmd("Noice telescope"), "Show Notifications in Telescope" },
 		m = { get_cmd("messages"), "Show Messages" },
+		d = { "<cmd>NoiceDisable<cr>", "Noice Disable" },
+		e = { "<cmd>NoiceEnable<cr>", "Noice Enable" },
 	},
 	m = {
 		name = "+Marks",
