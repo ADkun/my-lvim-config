@@ -1072,13 +1072,13 @@ lvim.plugins = {
 	{
 		"LeonHeidelbach/trailblazer.nvim",
 		lazy = true,
-		event = { "User FileOpened", "BufReadPre" },
+		event = { "User FileOpened" },
 		config = function()
-			local HOME = os.getenv("HOME")
+			-- local HOME = os.getenv("HOME")
 			require("trailblazer").setup({
-				auto_save_trailblazer_state_on_exit = true,
-				auto_load_trailblazer_state_on_enter = true,
-				custom_session_storage_dir = HOME .. "/.local/share/trail_blazer_sessions/",
+				auto_save_trailblazer_state_on_exit = false,
+				auto_load_trailblazer_state_on_enter = false,
+				-- custom_session_storage_dir = HOME .. "/.local/share/trail_blazer_sessions/",
 				trail_options = {
 					mark_symbol = "•", --  will only be used if trail_mark_symbol_line_indicators_enabled = true
 					newest_mark_symbol = "󰝥", -- disable this mark symbol by setting its value to ""
