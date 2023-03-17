@@ -839,8 +839,8 @@ lvim.plugins = {
 			})
 			-- You can even bind it to search jumping and more, example:
 			local kopts = { noremap = true, silent = true }
-			vim.api.nvim_set_keymap("n", "n", 'n:lua require("specs").show_specs()<CR>', kopts)
-			vim.api.nvim_set_keymap("n", "N", 'N:lua require("specs").show_specs()<CR>', kopts)
+			-- vim.api.nvim_set_keymap("n", "n", 'n:lua require("specs").show_specs()<CR>', kopts)
+			-- vim.api.nvim_set_keymap("n", "N", 'N:lua require("specs").show_specs()<CR>', kopts)
 
 			-- Or maybe you do a lot of screen-casts and want to call attention to a specific line of code:
 			vim.api.nvim_set_keymap(
