@@ -1089,7 +1089,7 @@ lvim.plugins = {
 				mappings = {
 					nv = {
 						motions = {
-							new_trail_mark = "<A-d>",
+							new_trail_mark = "<A-s>",
 							track_back = "<A-c>",
 							peek_move_next_down = "<A-J>",
 							peek_move_previous_up = "<A-K>",
@@ -1103,7 +1103,7 @@ lvim.plugins = {
 							set_trail_mark_select_mode = "<A-t>",
 							switch_to_next_trail_mark_stack = "<A-.>",
 							switch_to_previous_trail_mark_stack = "<A-,>",
-							set_trail_mark_stack_sort_mode = "<A-s>",
+							set_trail_mark_stack_sort_mode = "<A-S>",
 						},
 					},
 				},
