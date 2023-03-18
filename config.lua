@@ -1,5 +1,6 @@
 local ENABLE_EXT = true
 local ENABLE_NOICE = true
+local ENABLE_HARPOON = true
 
 -- vim options
 vim.opt.shiftwidth = 4
@@ -993,7 +994,7 @@ lvim.plugins = {
 	},
 	{
 		"ThePrimeagen/harpoon",
-		enabled = ENABLE_EXT,
+		enabled = ENABLE_EXT and ENABLE_HARPOON,
 		lazy = true,
 		event = "VeryLazy",
 		dependencies = {
