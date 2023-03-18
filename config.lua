@@ -71,6 +71,10 @@ local function set_keymap()
 	keymap["ohh"] = { "<cmd>Telescope harpoon marks<cr>", "Telescope Harpoon" }
 	keymap["ohd"] = { "<cmd>lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
 
+    keymap["ou"] = { "+Ufo" }
+    keymap["oud"] = { "<cmd>UfoDisable<cr>", "Disable Ufo" }
+    keymap["oue"] = { "<cmd>UfoEnable<cr>", "Enable Ufo" }
+
 	keymap["m"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
 
 	keymap["z"] = { name = "+Windows" }
