@@ -27,8 +27,6 @@ lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 local function set_keymap()
 	local keymap = lvim.builtin.which_key.mappings
     local vkeymap = lvim.builtin.which_key.vmappings
-	lvim.keys.normal_mode["ga"] = "<cmd>EasyAlign<CR>"
-	lvim.keys.visual_mode["ga"] = "<cmd>EasyAlign<CR>"
 	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 	keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 	keymap["o"] = { name = "+Custom" }
@@ -370,14 +368,6 @@ lvim.plugins = {
 					},
 				},
 			})
-		end,
-	},
-	{
-		"ray-x/lsp_signature.nvim",
-		lazy = true,
-		event = { "LspAttach" },
-		config = function()
-			require("lsp_signature").on_attach()
 		end,
 	},
 	{
@@ -803,11 +793,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"junegunn/vim-easy-align",
-		lazy = true,
-		cmd = "EasyAlign",
-	},
-	{
 		"s1n7ax/nvim-window-picker",
 		lazy = true,
 		event = { "WinNew" },
@@ -968,41 +953,8 @@ lvim.plugins = {
 			"nvim-lua/plenary.nvim",
 		},
 		config = function()
-			require("harpoon").setup({
-				-- global_settings = {
-				--     save_on_toggle = false,
-				--     save_on_change = true,
-				--     enter_sendcmd = false,
-				--     tmux_autoclose_windows = false,
-				--     excluded_filetypes = { "harpoon"},
-				--     mark_branch = false,
-				-- }
-			})
+			require("harpoon").setup({})
 			require("telescope").load_extension("harpoon")
-		end,
-	},
-	{
-		"winston0410/range-highlight.nvim",
-        -- WARN: range-highlight would cause performance issue in cmdline
-		enabled = false,
-		dependencies = { "winston0410/cmd-parser.nvim" },
-		lazy = true,
-        keys = { ":" },
-		config = function()
-			require("range-highlight").setup({})
-		end,
-	},
-	{
-		"nacro90/numb.nvim",
-        -- WARN: numb.nvim would cause performance issue in cmdline
-		enabled = false,
-		lazy = true,
-        keys = { ":" },
-		config = function()
-			require("numb").setup({
-				show_numbers = true, -- Enable 'number' for the window while peeking
-				show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-			})
 		end,
 	},
 	{
@@ -1107,9 +1059,6 @@ lvim.plugins = {
 					yankMacro = "yq",
 					-- addBreakPoint = "##",
 				},
-				-- clear = false,
-				-- logLevel = vim.log.levels.INFO,
-				-- dapSharedKeymaps = false,
 			})
 		end,
 	},
@@ -1120,13 +1069,8 @@ lvim.plugins = {
 		config = function()
 			require("various-textobjs").setup({
 				useDefaultKeymaps = true,
-				-- lookForwardLines = 5,
+				lookForwardLines = 10,
 			})
-			-- -- example: `?` for diagnostic textobj
-			vim.keymap.set({ "o", "x" }, "?", function()
-				require("various-textobjs").diagnostic()
-			end)
-
 			-- example: `an` for outer subword, `in` for inner subword
 			vim.keymap.set({ "o", "x" }, "aS", function()
 				require("various-textobjs").subword(false)
@@ -1134,16 +1078,6 @@ lvim.plugins = {
 			vim.keymap.set({ "o", "x" }, "iS", function()
 				require("various-textobjs").subword(true)
 			end)
-
-			-- -- exception: indentation textobj requires two parameters, the first for
-			-- -- exclusion of the starting border, the second for the exclusion of ending
-			-- -- border
-			-- vim.keymap.set({ "o", "x" }, "ii", function()
-			-- 	require("various-textobjs").indentation(true, true)
-			-- end)
-			-- vim.keymap.set({ "o", "x" }, "ai", function()
-			-- 	require("various-textobjs").indentation(false, true)
-			-- end)
 		end,
 	},
 	{
@@ -1212,15 +1146,15 @@ lvim.plugins = {
 							["[d"] = "@conditional.outer",
 						},
 					},
-					-- swap = {
-					-- 	enable = false,
-					-- 	swap_next = {
-					-- 		["<leader>a"] = "@parameter.inner",
-					-- 	},
-					-- 	swap_previous = {
-					-- 		["<leader>A"] = "@parameter.inner",
-					-- 	},
-					-- },
+					swap = {
+						enable = false,
+						swap_next = {
+							["<leader>a"] = "@parameter.inner",
+						},
+						swap_previous = {
+							["<leader>A"] = "@parameter.inner",
+						},
+					},
 				},
 			})
 			local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
