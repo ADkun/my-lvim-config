@@ -304,12 +304,12 @@ lvim.plugins = {
 	{
 		"ggandor/leap.nvim",
 		lazy = true,
-		keys = { "r", "R", "W", "dr", "dR", "yr", "yR", "cr", "cR" },
+		keys = { "E", "R", "W", "dE", "dR", "yE", "yR", "cE", "cR" },
 		config = function()
 			require("leap").opts.highlight_unlabeled_phase_one_targets = true
 			-- leap.add_default_mappings()
-			vim.keymap.set({ "x", "o", "n" }, "r", "<Plug>(leap-forward-to)")
-			vim.keymap.set({ "x", "o", "n" }, "R", "<Plug>(leap-backward-to)")
+			vim.keymap.set({ "x", "o", "n" }, "R", "<Plug>(leap-forward-to)")
+			vim.keymap.set({ "x", "o", "n" }, "E", "<Plug>(leap-backward-to)")
 			vim.keymap.set({ "x", "o", "n" }, "W", "<Plug>(leap-from-window)")
 		end,
 	},
@@ -330,7 +330,7 @@ lvim.plugins = {
 	{
 		"phaazon/hop.nvim",
 		lazy = true,
-        keys = { "E" },
+        keys = { "r" },
 		config = function()
 			require("hop").setup({
 				-- keys = "etovxqpdygfblzhckisuran",
@@ -338,7 +338,7 @@ lvim.plugins = {
 				-- hint_position = require("hop.hint").HintPosition.MIDDLE,
 			})
 			-- vim.api.nvim_set_keymap("n", "R", "<cmd>HopChar2<cr>", { silent = true })
-			vim.api.nvim_set_keymap("n", "E", "<cmd>HopChar1<cr>", { silent = true })
+			vim.api.nvim_set_keymap("n", "r", "<cmd>HopChar1<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "W", "<cmd>HopWord<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "W", "<cmd>HopLine<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "P", "<cmd>HopPattern<cr>", { silent = true })
