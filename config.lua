@@ -578,8 +578,6 @@ lvim.plugins = {
 		-- Marks management
 		lazy = true,
         event = { "User FileOpened" },
-        -- keys = { "m" },
-        -- cmd = { "MarksListAll", "MarksListBuf", "MarksListGlobal" },
 		config = function()
 			require("marks").setup({
 				default_mappings = true,
@@ -624,10 +622,6 @@ lvim.plugins = {
 				},
 			})
 		end,
-	},
-	{
-		"anuvyklack/middleclass",
-		lazy = true,
 	},
 	{
 		"anuvyklack/windows.nvim",
