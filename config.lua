@@ -725,7 +725,7 @@ lvim.plugins = {
 		"folke/noice.nvim",
 		enabled = ENABLE_EXT and ENABLE_NOICE,
 		lazy = true,
-		event = "VeryLazy",
+		event = "User FileOpened",
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
 		config = function()
 			require("noice").setup({
@@ -737,15 +737,18 @@ lvim.plugins = {
 						["cmp.entry.get_documentation"] = true,
 					},
 				},
-                cmdline = {
-                    enabled = true,
-                },
+                -- popupmenu = {
+                --     enabled = true,
+                -- },
+                -- cmdline = {
+                --     enabled = true,
+                -- },
 				presets = {
-					bottom_search = false,
+					bottom_search = true,
 					command_palette = true,
 					long_message_to_split = true,
 					inc_rename = false,
-					lsp_doc_border = false,
+					lsp_doc_border = true,
 				},
 				messages = {
 					enabled = true,
