@@ -747,7 +747,7 @@ lvim.plugins = {
                 --     enabled = true,
                 -- },
 				presets = {
-					bottom_search = true,
+					bottom_search = false,
 					command_palette = true,
 					long_message_to_split = true,
 					inc_rename = false,
@@ -771,7 +771,6 @@ lvim.plugins = {
 		"kevinhwang91/nvim-ufo",
 		-- enabled = ENABLE_EXT,
 		lazy = true,
-        keys = { "zc", "zr", "zm", "zo", "zM", "zO", "zR" },
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
