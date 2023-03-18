@@ -8,9 +8,6 @@ vim.opt.tabstop = 4
 vim.opt.relativenumber = true
 vim.opt.cursorcolumn = true
 
-local function get_cmd(c)
-	return "<cmd>" .. c .. "<CR>"
-end
 -- general
 lvim.log.level = "info"
 lvim.format_on_save = {
@@ -24,35 +21,35 @@ lvim.format_on_save = {
 -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
 lvim.leader = "space"
 -- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+lvim.keys.normal_mode["<C-s>"] = "<cmd>w<cr>"
+lvim.keys.normal_mode["<S-l>"] = "<cmd>BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 
 local function set_keymap()
 	local keymap = lvim.builtin.which_key.mappings
-	lvim.keys.normal_mode["ga"] = ":EasyAlign<CR>"
-	lvim.keys.visual_mode["ga"] = ":EasyAlign<CR>"
+	lvim.keys.normal_mode["ga"] = "<cmd>EasyAlign<CR>"
+	lvim.keys.visual_mode["ga"] = "<cmd>EasyAlign<CR>"
 	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 	keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 	keymap["o"] = { name = "+Custom" }
-	keymap["ow"] = { get_cmd("setlocal wrap!"), "Toggle Soft Wrap" }
+	keymap["ow"] = { "<cmd>setlocal wrap!<cr>", "Toggle Soft Wrap" }
 
 	keymap["os"] = { name = "+Spectre" }
-	keymap["oss"] = { get_cmd("lua require('spectre').open()"), "Spectre Open" }
-	keymap["osw"] = { get_cmd("lua require('spectre').open_visual({select_word=true})"), "Spectre in Visual Word" }
-	keymap["osv"] = { "<esc>:lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
-	keymap["osf"] = { "viw:lua require('spectre').open_file_search()<CR>", "Spectre in File" }
+	keymap["oss"] = { "<cmd>lua require('spectre').open()<cr>", "Spectre Open" }
+	keymap["osw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Spectre in Visual Word" }
+	keymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
+	keymap["osf"] = { "viw<cmd>lua require('spectre').open_file_search()<CR>", "Spectre in File" }
 
 	keymap["ot"] = { name = "+Todo" }
-	keymap["otq"] = { get_cmd("TodoQuickFix"), "Todo quickfix" }
-	keymap["otl"] = { get_cmd("TodoLocList"), "Todo loclist" }
-	keymap["ott"] = { get_cmd("TodoTelescope"), "Todo Telescope" }
-	keymap["otT"] = { get_cmd("TodoTrouble"), "Todo Trouble" }
+	keymap["otq"] = { "<cmd>TodoQuickFix<cr>", "Todo quickfix" }
+	keymap["otl"] = { "<cmd>TodoLocList<cr>", "Todo loclist" }
+	keymap["ott"] = { "<cmd>TodoTelescope<cr>", "Todo Telescope" }
+	keymap["otT"] = { "<cmd>TodoTrouble<cr>", "Todo Trouble" }
 
 	keymap["on"] = { name = "+Notify" }
-	keymap["onn"] = { get_cmd("Notifications"), "Show Notifications" }
-	keymap["ont"] = { get_cmd("Noice telescope"), "Show Notifications in Telescope" }
-	keymap["onm"] = { get_cmd("messages"), "Show Messages" }
+	keymap["onn"] = { "<cmd>Notifications<cr>", "Show Notifications" }
+	keymap["ont"] = { "<cmd>Noice telescope<cr>", "Show Notifications in Telescope" }
+	keymap["onm"] = { "<cmd>messages<cr>", "Show Messages" }
 	keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
 	keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
 
@@ -67,27 +64,27 @@ local function set_keymap()
 	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
 
 	keymap["oh"] = { name = "+Harpoon" }
-	keymap["ohf"] = { ":lua require('harpoon.mark').add_file()<cr>", "Add File" }
-	keymap["oht"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
-	keymap["ohn"] = { ":lua require('harpoon.ui').nav_next()<cr>", "Next" }
-	keymap["ohp"] = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
-	keymap["ohh"] = { ":Telescope harpoon marks<cr>", "Telescope Harpoon" }
-	keymap["ohd"] = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
+	keymap["ohf"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" }
+	keymap["oht"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
+	keymap["ohn"] = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "Next" }
+	keymap["ohp"] = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
+	keymap["ohh"] = { "<cmd>Telescope harpoon marks<cr>", "Telescope Harpoon" }
+	keymap["ohd"] = { "<cmd>lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
 
-	keymap["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
+	keymap["m"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
 
 	keymap["z"] = { name = "+Windows" }
-	keymap["zm"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
-	keymap["zv"] = { get_cmd("WindowsMaximizeVertically"), "Window Vertically Maximize" }
-	keymap["zh"] = { get_cmd("WindowsMaximizeHorizontally"), "Window Horizontally Maximize" }
-	keymap["ze"] = { get_cmd("WindowsEqualize"), "Window Equalize" }
+	keymap["zm"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
+	keymap["zv"] = { "<cmd>WindowsMaximizeVertically<cr>", "Window Vertically Maximize" }
+	keymap["zh"] = { "<cmd>WindowsMaximizeHorizontally<cr>", "Window Horizontally Maximize" }
+	keymap["ze"] = { "<cmd>WindowsEqualize<cr>", "Window Equalize" }
 
-	keymap["a"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
+	keymap["a"] = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" }
 
 	keymap["S"] = { name = "+Session" }
-	keymap["Sc"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
-	keymap["Sl"] = { get_cmd("lua require('persistence').load({ last = true })"), "Restore last session" }
-	keymap["SQ"] = { get_cmd("lua require('persistence').stop()"), "Quit without saving session" }
+	keymap["Sc"] = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" }
+	keymap["Sl"] = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" }
+	keymap["SQ"] = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" }
 
 	keymap["t"] = { name = "Diagnostics" }
 	keymap["tt"] = { "<cmd>TroubleToggle<cr>", "trouble" }
@@ -344,11 +341,11 @@ lvim.plugins = {
 				-- uppercase_labels = true,
 				-- hint_position = require("hop.hint").HintPosition.MIDDLE,
 			})
-			-- vim.api.nvim_set_keymap("n", "R", ":HopChar2<cr>", { silent = true })
-			vim.api.nvim_set_keymap("n", "E", ":HopChar1<cr>", { silent = true })
-			-- vim.api.nvim_set_keymap("n", "W", ":HopWord<cr>", { silent = true })
-			-- vim.api.nvim_set_keymap("n", "W", ":HopLine<cr>", { silent = true })
-			-- vim.api.nvim_set_keymap("n", "P", ":HopPattern<cr>", { silent = true })
+			-- vim.api.nvim_set_keymap("n", "R", "<cmd>HopChar2<cr>", { silent = true })
+			vim.api.nvim_set_keymap("n", "E", "<cmd>HopChar1<cr>", { silent = true })
+			-- vim.api.nvim_set_keymap("n", "W", "<cmd>HopWord<cr>", { silent = true })
+			-- vim.api.nvim_set_keymap("n", "W", "<cmd>HopLine<cr>", { silent = true })
+			-- vim.api.nvim_set_keymap("n", "P", "<cmd>HopPattern<cr>", { silent = true })
 		end,
 	},
 	{
