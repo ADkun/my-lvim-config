@@ -1,4 +1,4 @@
-local ENABLE_EXT = true
+-- local ENABLE_EXT = true
 local ENABLE_NOICE = true
 local ENABLE_HARPOON = true
 
@@ -293,7 +293,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/trouble.nvim",
-		enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		lazy = true,
 		cmd = { "TroubleToggle", "Trouble", "TroubleRefresh" },
 		config = function()
@@ -400,7 +400,7 @@ lvim.plugins = {
 	},
 	{
 		"rmagatti/goto-preview",
-		enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		lazy = true,
         keys = { "gp" },
 		config = function()
@@ -438,7 +438,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/todo-comments.nvim",
-		enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
 		lazy = true,
 		event = { "User FileOpened" },
@@ -519,7 +519,7 @@ lvim.plugins = {
 	},
 	{
 		"andymass/vim-matchup",
-		enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
 		event = { "User FileOpened" },
@@ -720,7 +720,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/noice.nvim",
-		enabled = ENABLE_EXT and ENABLE_NOICE,
+		enabled = ENABLE_NOICE,
 		lazy = true,
 		event = "User FileOpened",
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
@@ -952,7 +952,7 @@ lvim.plugins = {
 	},
 	{
 		"nvim-zh/colorful-winsep.nvim",
-		enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		lazy = true,
 		event = "WinNew",
 		config = function()
@@ -990,7 +990,7 @@ lvim.plugins = {
 	},
 	{
 		"ThePrimeagen/harpoon",
-		enabled = ENABLE_EXT and ENABLE_HARPOON,
+		enabled = ENABLE_HARPOON,
 		lazy = true,
 		cmd = "Telescope harpoon marks",
 		dependencies = {
@@ -1062,7 +1062,7 @@ lvim.plugins = {
 	},
 	{
 		"LeonHeidelbach/trailblazer.nvim",
-		enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		lazy = true,
         keys = { "<A-s>", "<A-d>" },
 		config = function()
