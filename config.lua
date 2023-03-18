@@ -739,6 +739,7 @@ lvim.plugins = {
 	{
 		"kevinhwang91/nvim-ufo",
 		lazy = true,
+        cmd = { "UfoDisable", "UfoEnable" },
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
