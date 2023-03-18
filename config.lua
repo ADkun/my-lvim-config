@@ -568,7 +568,7 @@ lvim.plugins = {
 	{
 		"ibhagwan/smartyank.nvim",
 		lazy = true,
-        keys = { "y", "Y" },
+        event = "User FileOpened",
 		config = function()
 			require("smartyank").setup()
 		end,
