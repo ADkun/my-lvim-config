@@ -996,7 +996,8 @@ lvim.plugins = {
 		"ThePrimeagen/harpoon",
 		enabled = ENABLE_EXT and ENABLE_HARPOON,
 		lazy = true,
-		event = "VeryLazy",
+        cmd = "Telescope harpoon marks",
+		event = "User FileOpened",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
