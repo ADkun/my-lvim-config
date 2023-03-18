@@ -1,4 +1,3 @@
--- local ENABLE_EXT = true
 local ENABLE_NOICE = true
 local ENABLE_HARPOON = true
 
@@ -27,6 +26,7 @@ lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 
 local function set_keymap()
 	local keymap = lvim.builtin.which_key.mappings
+    local vkeymap = lvim.builtin.which_key.vmappings
 	lvim.keys.normal_mode["ga"] = "<cmd>EasyAlign<CR>"
 	lvim.keys.visual_mode["ga"] = "<cmd>EasyAlign<CR>"
 	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
@@ -36,8 +36,8 @@ local function set_keymap()
 
 	keymap["os"] = { name = "+Spectre" }
 	keymap["oss"] = { "<cmd>lua require('spectre').open()<cr>", "Spectre Open" }
-	keymap["osw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Spectre in Visual Word" }
-	keymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
+	vkeymap["osw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Spectre in Visual Word" }
+	vkeymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
 	keymap["osf"] = { "viw<cmd>lua require('spectre').open_file_search()<CR>", "Spectre in File" }
 
 	keymap["ot"] = { name = "+Todo" }
@@ -293,7 +293,6 @@ lvim.plugins = {
 	},
 	{
 		"folke/trouble.nvim",
-		-- enabled = ENABLE_EXT,
 		lazy = true,
 		cmd = { "TroubleToggle", "Trouble", "TroubleRefresh" },
 		config = function()
@@ -319,12 +318,7 @@ lvim.plugins = {
 		dependencies = { "ggandor/leap.nvim" },
 		config = function()
 			require("flit").setup({
-				keys = {
-					f = "f",
-					F = "F",
-					t = "t",
-					T = "T",
-				},
+				keys = { f = "f", F = "F", t = "t", T = "T", },
 				labeled_modes = "v",
 				multiline = true,
 				opts = {},
@@ -349,13 +343,10 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"mrjones2014/nvim-ts-rainbow",
+		"HiPhish/nvim-ts-rainbow2",
 		-- Bracket pair rainbow colorize
 		lazy = true,
 		event = { "User FileOpened" },
-		config = function()
-            
-		end,
 	},
 	{
 		"romgrk/nvim-treesitter-context",
@@ -378,14 +369,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"folke/lsp-colors.nvim",
-		lazy = true,
-		event = { "LspAttach" },
-		config = function()
-			require("lsp-colors").setup()
-		end,
-	},
-	{
 		"ray-x/lsp_signature.nvim",
 		lazy = true,
 		event = { "LspAttach" },
@@ -400,7 +383,6 @@ lvim.plugins = {
 	},
 	{
 		"rmagatti/goto-preview",
-		-- enabled = ENABLE_EXT,
 		lazy = true,
         keys = { "gp" },
 		config = function()
@@ -438,7 +420,6 @@ lvim.plugins = {
 	},
 	{
 		"folke/todo-comments.nvim",
-		-- enabled = ENABLE_EXT,
 		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
 		lazy = true,
 		event = { "User FileOpened" },
@@ -446,16 +427,11 @@ lvim.plugins = {
 			require("todo-comments").setup()
 		end,
 	},
-	{ -- dot
-		"tpope/vim-repeat",
-		lazy = true,
-		keys = { "." },
-	},
 	{
 		"kylechui/nvim-surround",
 		-- ysiw)  ys$" ds]  cs'" dsf
 		lazy = true,
-		keys = { "c", "d", "y" },
+		keys = { "cs", "ds", "ys" },
 		config = function()
 			require("nvim-surround").setup({})
 		end,
@@ -471,7 +447,6 @@ lvim.plugins = {
 	},
 	{
 		"kevinhwang91/nvim-bqf",
-		-- enabled = ENABLE_EXT,
 		-- quickfix preview and other functions
 		lazy = true,
 		event = { "WinNew" },
@@ -519,7 +494,6 @@ lvim.plugins = {
 	},
 	{
 		"andymass/vim-matchup",
-		-- enabled = ENABLE_EXT,
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
 		event = { "User FileOpened" },
@@ -766,7 +740,6 @@ lvim.plugins = {
 	},
 	{
 		"kevinhwang91/nvim-ufo",
-		-- enabled = ENABLE_EXT,
 		lazy = true,
 		dependencies = {
 			"kevinhwang91/promise-async",
@@ -952,7 +925,6 @@ lvim.plugins = {
 	},
 	{
 		"nvim-zh/colorful-winsep.nvim",
-		-- enabled = ENABLE_EXT,
 		lazy = true,
 		event = "WinNew",
 		config = function()
@@ -1062,7 +1034,6 @@ lvim.plugins = {
 	},
 	{
 		"LeonHeidelbach/trailblazer.nvim",
-		-- enabled = ENABLE_EXT,
 		lazy = true,
         keys = { "<A-s>", "<A-d>" },
 		config = function()
