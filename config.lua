@@ -880,18 +880,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"nacro90/numb.nvim",
-		enabled = ENABLE_EXT,
-		lazy = true,
-        keys = { ":" },
-		config = function()
-			require("numb").setup({
-				show_numbers = true, -- Enable 'number' for the window while peeking
-				show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-			})
-		end,
-	},
-	{
 		"simrat39/symbols-outline.nvim",
 		lazy = true,
 		cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
@@ -1024,12 +1012,26 @@ lvim.plugins = {
 	},
 	{
 		"winston0410/range-highlight.nvim",
-		enabled = ENABLE_EXT,
+        -- WARN: range-highlight would cause performance issue in cmdline
+		enabled = false,
 		dependencies = { "winston0410/cmd-parser.nvim" },
 		lazy = true,
         keys = { ":" },
 		config = function()
 			require("range-highlight").setup({})
+		end,
+	},
+	{
+		"nacro90/numb.nvim",
+        -- WARN: numb.nvim would cause performance issue in cmdline
+		enabled = false,
+		lazy = true,
+        keys = { ":" },
+		config = function()
+			require("numb").setup({
+				show_numbers = true, -- Enable 'number' for the window while peeking
+				show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+			})
 		end,
 	},
 	{
