@@ -1153,17 +1153,17 @@ lvim.plugins = {
 				-- lookForwardLines = 5,
 			})
 			-- -- example: `?` for diagnostic textobj
-			-- vim.keymap.set({ "o", "x" }, "?", function()
-			-- 	require("various-textobjs").diagnostic()
-			-- end)
+			vim.keymap.set({ "o", "x" }, "?", function()
+				require("various-textobjs").diagnostic()
+			end)
 
-			-- -- example: `an` for outer subword, `in` for inner subword
-			-- vim.keymap.set({ "o", "x" }, "aS", function()
-			-- 	require("various-textobjs").subword(false)
-			-- end)
-			-- vim.keymap.set({ "o", "x" }, "iS", function()
-			-- 	require("various-textobjs").subword(true)
-			-- end)
+			-- example: `an` for outer subword, `in` for inner subword
+			vim.keymap.set({ "o", "x" }, "aS", function()
+				require("various-textobjs").subword(false)
+			end)
+			vim.keymap.set({ "o", "x" }, "iS", function()
+				require("various-textobjs").subword(true)
+			end)
 
 			-- -- exception: indentation textobj requires two parameters, the first for
 			-- -- exclusion of the starting border, the second for the exclusion of ending
