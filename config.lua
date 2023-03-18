@@ -1,7 +1,6 @@
---[[
- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
- `lvim` is the global options object
-]]
+local ENABLE_EXT = true
+local ENABLE_NOICE = true
+
 -- vim options
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -11,11 +10,10 @@ vim.opt.cursorcolumn = true
 local function get_cmd(c)
 	return "<cmd>" .. c .. "<CR>"
 end
-
 -- general
 lvim.log.level = "info"
 lvim.format_on_save = {
-	enabled = true,
+	enabled = false,
 	pattern = "*.lua",
 	timeout = 1000,
 }
@@ -28,105 +26,103 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-lvim.keys.normal_mode["ga"] = ":EasyAlign<CR>"
-lvim.keys.visual_mode["ga"] = ":EasyAlign<CR>"
 
-local keymap = lvim.builtin.which_key.mappings
-keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
-keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-keymap["o"] = {
-	name = "+Custom",
-	w = { get_cmd("setlocal wrap!"), "Toggle Soft Wrap" },
-	s = {
-		name = "+Spectre",
-		s = { get_cmd("lua require('spectre').open()"), "Spectre Open" },
-		w = { get_cmd("lua require('spectre').open_visual({select_word=true})"), "Spectre in Visual Word" },
-		v = { "<esc>:lua require('spectre').open_visual()<CR>", "Spectre in Visual" },
-		f = { "viw:lua require('spectre').open_file_search()<CR>", "Spectre in File" },
-	},
-	t = {
-		name = "+Todo",
-		q = { get_cmd("TodoQuickFix"), "Todo quickfix" },
-		l = { get_cmd("TodoLocList"), "Todo loclist" },
-		t = { get_cmd("TodoTelescope"), "Todo Telescope" },
-		T = { get_cmd("TodoTrouble"), "Todo Trouble" },
-	},
-	n = {
-		name = "+Notify",
-		n = { get_cmd("Notifications"), "Show Notifications" },
-		t = { get_cmd("Noice telescope"), "Show Notifications in Telescope" },
-		m = { get_cmd("messages"), "Show Messages" },
-		d = { "<cmd>NoiceDisable<cr>", "Noice Disable" },
-		e = { "<cmd>NoiceEnable<cr>", "Noice Enable" },
-	},
-	m = {
-		name = "+Marks",
-		a = { "<cmd>MarksListAll<CR>", "Show All Marks" },
-		b = { "<cmd>MarksListBuf<CR>", "Show Marks in Buffer" },
-		g = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" },
-	},
-	l = { "<cmd>e<CR>", "Reload File" },
-	c = { "<cmd>pwd<CR>", "Show Current Folder" },
-	o = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" },
-	i = { "<cmd>LspInstall<cr>", "LspInstall" },
-	h = {
-		name = "+Harpoon",
-		f = { ":lua require('harpoon.mark').add_file()<cr>", "Add File" },
-		t = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" },
-		n = { ":lua require('harpoon.ui').nav_next()<cr>", "Next" },
-		p = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev" },
-		h = { ":Telescope harpoon marks<cr>", "Telescope Harpoon" },
-		d = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" },
-	},
-}
-keymap["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
-keymap["z"] = {
-	name = "+Windows",
-	m = { get_cmd("WindowsMaximize"), "Window Maximize" },
-	v = { get_cmd("WindowsMaximizeVertically"), "Window Vertically Maximize" },
-	h = { get_cmd("WindowsMaximizeHorizontally"), "Window Horizontally Maximize" },
-	e = { get_cmd("WindowsEqualize"), "Window Equalize" },
-}
-keymap["a"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
-keymap["S"] = {
-	name = "+Session",
-	c = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" },
-	l = { get_cmd("lua require('persistence').load({ last = true })"), "Restore last session" },
-	Q = { get_cmd("lua require('persistence').stop()"), "Quit without saving session" },
-}
-keymap["t"] = {
-	name = "Diagnostics",
-	t = { "<cmd>TroubleToggle<cr>", "trouble" },
-	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
-	d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
-	q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-	l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-	r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
-}
--- search.replace.nvim config BEGIN
-keymap["r"] = {
-	name = "SearchReplaceSingleBuffer",
-	s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
-	o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
-	w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
-	W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
-	e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
-	f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
-	b = {
-		name = "SearchReplaceMultiBuffer",
-		s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
-		o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
-		w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
-		W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
-		e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
-		f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
-	},
-}
-lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
-lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
-lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
-vim.o.inccommand = "split"
--- search.replace.nvim config END
+local function set_keymap()
+    local keymap = lvim.builtin.which_key.mappings
+
+    lvim.keys.normal_mode["ga"] = ":EasyAlign<CR>"
+    lvim.keys.visual_mode["ga"] = ":EasyAlign<CR>"
+    keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+    keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+    keymap["o"] = { name = "+Custom" }
+    keymap["ow"] = { get_cmd("setlocal wrap!"), "Toggle Soft Wrap" }
+
+    keymap["os"] = { name = "+Spectre" }
+    keymap["oss"] = { get_cmd("lua require('spectre').open()"), "Spectre Open" }
+    keymap["osw"] = { get_cmd("lua require('spectre').open_visual({select_word=true})"), "Spectre in Visual Word" }
+    keymap["osv"] = { "<esc>:lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
+    keymap["osf"] = { "viw:lua require('spectre').open_file_search()<CR>", "Spectre in File" }
+
+    keymap["ot"] = { name = "+Todo" }
+    keymap["otq"] = { get_cmd("TodoQuickFix"), "Todo quickfix" }
+    keymap["otl"] = { get_cmd("TodoLocList"), "Todo loclist" }
+    keymap["ott"] = { get_cmd("TodoTelescope"), "Todo Telescope" }
+    keymap["otT"] = { get_cmd("TodoTrouble"), "Todo Trouble" }
+
+    keymap["on"] = { name = "+Notify" }
+    keymap["onn"] = { get_cmd("Notifications"), "Show Notifications" }
+    keymap["ont"] = { get_cmd("Noice telescope"), "Show Notifications in Telescope" }
+    keymap["onm"] = { get_cmd("messages"), "Show Messages" }
+    keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
+    keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
+
+    keymap["om"] = { name = "+Marks" }
+    keymap["oma"] = { "<cmd>MarksListAll<CR>", "Show All Marks" }
+    keymap["omb"] = { "<cmd>MarksListBuf<CR>", "Show Marks in Buffer" }
+    keymap["omg"] = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" }
+
+    keymap["ol"] = { "<cmd>e<CR>", "Reload File" }
+    keymap["oc"] = { "<cmd>pwd<CR>", "Show Current Folder" }
+    keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
+    keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
+
+    keymap["oh"] = { name = "+Harpoon" }
+    keymap["ohf"] = { ":lua require('harpoon.mark').add_file()<cr>", "Add File" }
+    keymap["oht"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
+    keymap["ohn"] = { ":lua require('harpoon.ui').nav_next()<cr>", "Next" }
+    keymap["ohp"] = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
+    keymap["ohh"] = { ":Telescope harpoon marks<cr>", "Telescope Harpoon" }
+    keymap["ohd"] = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
+
+    keymap["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
+
+    keymap["z"] = { name = "+Windows" }
+    keymap["zm"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
+    keymap["zv"] = { get_cmd("WindowsMaximizeVertically"), "Window Vertically Maximize" }
+    keymap["zh"] = { get_cmd("WindowsMaximizeHorizontally"), "Window Horizontally Maximize" }
+    keymap["ze"] = { get_cmd("WindowsEqualize"), "Window Equalize" }
+
+    keymap["a"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
+
+    keymap["S"] = { name = "+Session" }
+    keymap["Sc"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
+    keymap["Sl"] = { get_cmd("lua require('persistence').load({ last = true })"), "Restore last session" }
+    keymap["SQ"] = { get_cmd("lua require('persistence').stop()"), "Quit without saving session" }
+
+    keymap["t"] = { name = "Diagnostics" }
+    keymap["tt"] = { "<cmd>TroubleToggle<cr>", "trouble" }
+    keymap["tw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" }
+    keymap["td"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" }
+    keymap["tq"] = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" }
+    keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
+    keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
+
+    -- search.replace.nvim config BEGIN
+    keymap["r"] = {
+        name = "SearchReplaceSingleBuffer",
+        s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
+        o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
+        w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
+        W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
+        e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
+        f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
+        b = {
+            name = "SearchReplaceMultiBuffer",
+            s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
+            o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
+            w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
+            W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
+            e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
+            f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
+        },
+    }
+    lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
+    lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
+    lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
+    vim.o.inccommand = "split"
+    -- search.replace.nvim config END
+end
+set_keymap()
 
 -- -- Change theme settings
 -- lvim.colorscheme = "one_monokai"
@@ -287,6 +283,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/trouble.nvim",
+		enabled = ENABLE_EXT,
 		lazy = true,
 		cmd = { "TroubleToggle", "Trouble", "TroubleRefresh" },
 		config = function()
@@ -393,6 +390,7 @@ lvim.plugins = {
 	},
 	{
 		"rmagatti/goto-preview",
+        enabled = ENABLE_EXT,
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -430,6 +428,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/todo-comments.nvim",
+		enabled = ENABLE_EXT,
 		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
 		lazy = true,
 		event = { "User FileOpened" },
@@ -462,6 +461,7 @@ lvim.plugins = {
 	},
 	{
 		"kevinhwang91/nvim-bqf",
+        -- enabled = ENABLE_EXT,
 		-- quickfix preview and other functions
 		lazy = true,
 		event = { "WinNew" },
@@ -509,6 +509,7 @@ lvim.plugins = {
 	},
 	{
 		"andymass/vim-matchup",
+        enabled = ENABLE_EXT,
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
 		event = { "User FileOpened" },
@@ -707,6 +708,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/noice.nvim",
+		enabled = ENABLE_EXT and ENABLE_NOICE,
 		lazy = true,
 		event = "VeryLazy",
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
@@ -743,6 +745,7 @@ lvim.plugins = {
 	},
 	{
 		"kevinhwang91/nvim-ufo",
+		-- enabled = ENABLE_EXT,
 		lazy = true,
 		event = { "User FileOpened" },
 		dependencies = {
@@ -819,41 +822,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"edluffy/specs.nvim",
-		lazy = true,
-		event = { "User FileOpened" },
-		config = function()
-			local specs = require("specs")
-			specs.setup({
-				show_jumps = true,
-				min_jump = 10,
-				popup = {
-					delay_ms = 0,
-					inc_ms = 10,
-					blend = 50,
-					width = 10,
-					winhl = "PMenu",
-					fader = specs.pulse_fader,
-					resizer = specs.shrink_resizer,
-				},
-				ignore_filetypes = {},
-				ignore_buftypes = { nofile = true },
-			})
-			-- You can even bind it to search jumping and more, example:
-			local kopts = { noremap = true, silent = true }
-			-- vim.api.nvim_set_keymap("n", "n", 'n:lua require("specs").show_specs()<CR>', kopts)
-			-- vim.api.nvim_set_keymap("n", "N", 'N:lua require("specs").show_specs()<CR>', kopts)
-
-			-- Or maybe you do a lot of screen-casts and want to call attention to a specific line of code:
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>v",
-				':lua require("specs").show_specs({blend = 80, width = 97, winhl = "Search", delay_ms = 0, inc_ms = 21})<CR>',
-				kopts
-			)
-		end,
-	},
-	{
 		"junegunn/vim-easy-align",
 		lazy = true,
 		cmd = "EasyAlign",
@@ -904,6 +872,7 @@ lvim.plugins = {
 	},
 	{
 		"nacro90/numb.nvim",
+		enabled = ENABLE_EXT,
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -986,6 +955,7 @@ lvim.plugins = {
 	},
 	{
 		"nvim-zh/colorful-winsep.nvim",
+		enabled = ENABLE_EXT,
 		lazy = true,
 		event = "WinNew",
 		config = function()
@@ -1023,6 +993,7 @@ lvim.plugins = {
 	},
 	{
 		"ThePrimeagen/harpoon",
+		enabled = ENABLE_EXT,
 		lazy = true,
 		event = "VeryLazy",
 		dependencies = {
@@ -1044,6 +1015,7 @@ lvim.plugins = {
 	},
 	{
 		"winston0410/range-highlight.nvim",
+		enabled = ENABLE_EXT,
 		dependencies = { "winston0410/cmd-parser.nvim" },
 		lazy = true,
 		event = { "User FileOpened" },
@@ -1064,6 +1036,7 @@ lvim.plugins = {
 	},
 	{
 		"LeonHeidelbach/trailblazer.nvim",
+		enabled = ENABLE_EXT,
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
@@ -1143,11 +1116,6 @@ lvim.plugins = {
 				-- dapSharedKeymaps = false,
 			})
 		end,
-	},
-	{
-		"sitiom/nvim-numbertoggle",
-		lazy = true,
-		event = { "User FileOpened" },
 	},
 	{
 		"chrisgrieser/nvim-various-textobjs",
