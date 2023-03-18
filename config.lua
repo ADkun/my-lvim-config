@@ -26,7 +26,7 @@ lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 
 local function set_keymap()
 	local keymap = lvim.builtin.which_key.mappings
-    local vkeymap = lvim.builtin.which_key.vmappings
+	local vkeymap = lvim.builtin.which_key.vmappings
 	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 	keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 	keymap["o"] = { name = "+Custom" }
@@ -69,9 +69,9 @@ local function set_keymap()
 	keymap["ohh"] = { "<cmd>Telescope harpoon marks<cr>", "Telescope Harpoon" }
 	keymap["ohd"] = { "<cmd>lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
 
-    keymap["ou"] = { "+Ufo" }
-    keymap["oud"] = { "<cmd>UfoDisable<cr>", "Disable Ufo" }
-    keymap["oue"] = { "<cmd>UfoEnable<cr>", "Enable Ufo" }
+	keymap["ou"] = { "+Ufo" }
+	keymap["oud"] = { "<cmd>UfoDisable<cr>", "Disable Ufo" }
+	keymap["oue"] = { "<cmd>UfoEnable<cr>", "Enable Ufo" }
 
 	keymap["m"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
 
@@ -121,17 +121,17 @@ local function set_keymap()
 	vim.o.inccommand = "split"
 	-- search.replace.nvim config END
 
-    vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-    vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-    vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-    vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-    vim.keymap.set("n", "B", function()
-        local winid = require("ufo").peekFoldedLinesUnderCursor()
-        if not winid then
-            -- choose one of coc.nvim and nvim lsp
-            vim.lsp.buf.hover()
-        end
-    end)
+	vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+	vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+	vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+	vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+	vim.keymap.set("n", "B", function()
+		local winid = require("ufo").peekFoldedLinesUnderCursor()
+		if not winid then
+			-- choose one of coc.nvim and nvim lsp
+			vim.lsp.buf.hover()
+		end
+	end)
 end
 set_keymap()
 
@@ -220,6 +220,10 @@ formatters.setup({
 		extra_args = { "--print-width", "100" },
 		filetypes = { "typescript", "typescriptreact" },
 	},
+    {
+        command = "markdownlint",
+        filetypes = { "markdown", "md" },
+    }
 })
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
@@ -231,6 +235,10 @@ linters.setup({
 	{
 		command = "luacheck",
 		filetypes = { "lua" },
+	},
+	{
+		command = "markdownlint",
+		filetypes = { "markdown", "md" },
 	},
 	-- {
 	-- 	command = "cpplint",
@@ -320,7 +328,7 @@ lvim.plugins = {
 		dependencies = { "ggandor/leap.nvim" },
 		config = function()
 			require("flit").setup({
-				keys = { f = "f", F = "F", t = "t", T = "T", },
+				keys = { f = "f", F = "F", t = "t", T = "T" },
 				labeled_modes = "v",
 				multiline = true,
 				opts = {},
@@ -330,7 +338,7 @@ lvim.plugins = {
 	{
 		"phaazon/hop.nvim",
 		lazy = true,
-        keys = { "r" },
+		keys = { "r" },
 		config = function()
 			require("hop").setup({
 				-- keys = "etovxqpdygfblzhckisuran",
@@ -378,7 +386,7 @@ lvim.plugins = {
 	{
 		"rmagatti/goto-preview",
 		lazy = true,
-        keys = { "gp" },
+		keys = { "gp" },
 		config = function()
 			require("goto-preview").setup({
 				width = 120, -- Width of the floating window
@@ -562,7 +570,7 @@ lvim.plugins = {
 	{
 		"ibhagwan/smartyank.nvim",
 		lazy = true,
-        event = "User FileOpened",
+		event = "User FileOpened",
 		config = function()
 			require("smartyank").setup()
 		end,
@@ -571,7 +579,7 @@ lvim.plugins = {
 		"chentoast/marks.nvim",
 		-- Marks management
 		lazy = true,
-        event = { "User FileOpened" },
+		event = { "User FileOpened" },
 		config = function()
 			require("marks").setup({
 				default_mappings = true,
@@ -689,9 +697,9 @@ lvim.plugins = {
 		config = function()
 			require("noice").setup({
 				lsp = {
-                    progress = {
-                        enabled = false,
-                    },
+					progress = {
+						enabled = false,
+					},
 					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 					-- override = {
 					-- 	["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -699,12 +707,12 @@ lvim.plugins = {
 					-- 	["cmp.entry.get_documentation"] = true,
 					-- },
 				},
-                -- popupmenu = {
-                --     enabled = true,
-                -- },
-                -- cmdline = {
-                --     enabled = true,
-                -- },
+				-- popupmenu = {
+				--     enabled = true,
+				-- },
+				-- cmdline = {
+				--     enabled = true,
+				-- },
 				presets = {
 					bottom_search = false,
 					command_palette = true,
@@ -729,7 +737,7 @@ lvim.plugins = {
 	{
 		"kevinhwang91/nvim-ufo",
 		lazy = true,
-        cmd = { "UfoDisable", "UfoEnable" },
+		cmd = { "UfoDisable", "UfoEnable" },
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
@@ -738,7 +746,6 @@ lvim.plugins = {
 			vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 			vim.o.foldlevelstart = 99
 			vim.o.foldenable = true
-
 
 			vim.cmd([[highlight AdCustomFold guifg=#bf8040]])
 			local handler = function(virtText, lnum, endLnum, width, truncate)
@@ -927,21 +934,21 @@ lvim.plugins = {
 				move_past_end_col = false,
 			})
 
-            local map = vim.api.nvim_set_keymap
-            map("n", "<M-h>", "<Plug>GoNSMLeft", { noremap = true, silent = true })
-            map("n", "<M-j>", "<Plug>GoNSMDown", { noremap = true, silent = true })
-            map("n", "<M-k>", "<Plug>GoNSMUp", { noremap = true, silent = true })
-            map("n", "<M-l>", "<Plug>GoNSMRight", { noremap = true, silent = true })
+			local map = vim.api.nvim_set_keymap
+			map("n", "<M-h>", "<Plug>GoNSMLeft", { noremap = true, silent = true })
+			map("n", "<M-j>", "<Plug>GoNSMDown", { noremap = true, silent = true })
+			map("n", "<M-k>", "<Plug>GoNSMUp", { noremap = true, silent = true })
+			map("n", "<M-l>", "<Plug>GoNSMRight", { noremap = true, silent = true })
 
-            map("x", "<M-h>", "<Plug>GoVSMLeft", { noremap = true, silent = true })
-            map("x", "<M-j>", "<Plug>GoVSMDown", { noremap = true, silent = true })
-            map("x", "<M-k>", "<Plug>GoVSMUp", { noremap = true, silent = true })
-            map("x", "<M-l>", "<Plug>GoVSMRight", { noremap = true, silent = true })
+			map("x", "<M-h>", "<Plug>GoVSMLeft", { noremap = true, silent = true })
+			map("x", "<M-j>", "<Plug>GoVSMDown", { noremap = true, silent = true })
+			map("x", "<M-k>", "<Plug>GoVSMUp", { noremap = true, silent = true })
+			map("x", "<M-l>", "<Plug>GoVSMRight", { noremap = true, silent = true })
 
-            map("x", "<C-h>", "<Plug>GoVSDLeft", { noremap = true, silent = true })
-            map("x", "<C-j>", "<Plug>GoVSDDown", { noremap = true, silent = true })
-            map("x", "<C-k>", "<Plug>GoVSDUp", { noremap = true, silent = true })
-            map("x", "<C-l>", "<Plug>GoVSDRight", { noremap = true, silent = true })
+			map("x", "<C-h>", "<Plug>GoVSDLeft", { noremap = true, silent = true })
+			map("x", "<C-j>", "<Plug>GoVSDDown", { noremap = true, silent = true })
+			map("x", "<C-k>", "<Plug>GoVSDUp", { noremap = true, silent = true })
+			map("x", "<C-l>", "<Plug>GoVSDRight", { noremap = true, silent = true })
 		end,
 	},
 	{
@@ -960,22 +967,23 @@ lvim.plugins = {
 	{
 		"roobert/search-replace.nvim",
 		lazy = true,
-        cmd = {
-            "SearchReplaceSingleBufferVisualSelection",
-            "SearchReplaceWithinVisualSelection",
-            "SearchReplaceWithinVisualSelectionCWord",
-            "SearchReplaceSingleBufferSelections",
-            "SearchReplaceSingleBufferCWord",
-            "SearchReplaceSingleBufferCWORD",
-            "SearchReplaceSingleBufferCExpr",
-            "SearchReplaceSingleBufferCFile",
-            "SearchReplaceMultiBufferSelections",
-            "SearchReplaceMultiBufferOpen",
-            "SearchReplaceMultiBufferCWord",
-            "SearchReplaceMultiBufferCWORD",
-            "SearchReplaceMultiBufferCExpr",
-            "SearchReplaceMultiBufferCFile",
-        },
+		cmd = {
+			"SearchReplaceSingleBufferVisualSelection",
+            "SearchReplaceSingleBufferOpen",
+			"SearchReplaceWithinVisualSelection",
+			"SearchReplaceWithinVisualSelectionCWord",
+			"SearchReplaceSingleBufferSelections",
+			"SearchReplaceSingleBufferCWord",
+			"SearchReplaceSingleBufferCWORD",
+			"SearchReplaceSingleBufferCExpr",
+			"SearchReplaceSingleBufferCFile",
+			"SearchReplaceMultiBufferSelections",
+			"SearchReplaceMultiBufferOpen",
+			"SearchReplaceMultiBufferCWord",
+			"SearchReplaceMultiBufferCWORD",
+			"SearchReplaceMultiBufferCExpr",
+			"SearchReplaceMultiBufferCFile",
+		},
 		config = function()
 			require("search-replace").setup({
 				default_replace_single_buffer_options = "gcI",
@@ -986,7 +994,7 @@ lvim.plugins = {
 	{
 		"LeonHeidelbach/trailblazer.nvim",
 		lazy = true,
-        keys = { "<A-s>", "<A-d>" },
+		keys = { "<A-s>", "<A-d>" },
 		config = function()
 			-- local HOME = os.getenv("HOME")
 			require("trailblazer").setup({
@@ -1047,7 +1055,7 @@ lvim.plugins = {
 	{
 		"chrisgrieser/nvim-recorder",
 		lazy = true,
-        keys = { "q", "Q", "<A-q>", "cq", "yq" },
+		keys = { "q", "Q", "<A-q>", "cq", "yq" },
 		config = function()
 			require("recorder").setup({
 				slots = { "u", "i", "o" },
