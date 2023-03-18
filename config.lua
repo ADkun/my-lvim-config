@@ -306,7 +306,7 @@ lvim.plugins = {
 	{
 		"ggandor/leap.nvim",
 		lazy = true,
-		keys = { "r", "R", "W" },
+		keys = { "r", "R", "W", "dr", "dR", "yr", "yR", "cr", "cR" },
 		config = function()
 			require("leap").opts.highlight_unlabeled_phase_one_targets = true
 			-- leap.add_default_mappings()
