@@ -16,7 +16,7 @@ lvim.log.level = "info"
 lvim.format_on_save = {
 	enabled = false,
 	pattern = "*.lua",
-	timeout = 1000,
+	timeout = 2500,
 }
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
@@ -29,99 +29,110 @@ lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 local function set_keymap()
-    local keymap = lvim.builtin.which_key.mappings
+	local keymap = lvim.builtin.which_key.mappings
+	lvim.keys.normal_mode["ga"] = ":EasyAlign<CR>"
+	lvim.keys.visual_mode["ga"] = ":EasyAlign<CR>"
+	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+	keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+	keymap["o"] = { name = "+Custom" }
+	keymap["ow"] = { get_cmd("setlocal wrap!"), "Toggle Soft Wrap" }
 
-    lvim.keys.normal_mode["ga"] = ":EasyAlign<CR>"
-    lvim.keys.visual_mode["ga"] = ":EasyAlign<CR>"
-    keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
-    keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-    keymap["o"] = { name = "+Custom" }
-    keymap["ow"] = { get_cmd("setlocal wrap!"), "Toggle Soft Wrap" }
+	keymap["os"] = { name = "+Spectre" }
+	keymap["oss"] = { get_cmd("lua require('spectre').open()"), "Spectre Open" }
+	keymap["osw"] = { get_cmd("lua require('spectre').open_visual({select_word=true})"), "Spectre in Visual Word" }
+	keymap["osv"] = { "<esc>:lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
+	keymap["osf"] = { "viw:lua require('spectre').open_file_search()<CR>", "Spectre in File" }
 
-    keymap["os"] = { name = "+Spectre" }
-    keymap["oss"] = { get_cmd("lua require('spectre').open()"), "Spectre Open" }
-    keymap["osw"] = { get_cmd("lua require('spectre').open_visual({select_word=true})"), "Spectre in Visual Word" }
-    keymap["osv"] = { "<esc>:lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
-    keymap["osf"] = { "viw:lua require('spectre').open_file_search()<CR>", "Spectre in File" }
+	keymap["ot"] = { name = "+Todo" }
+	keymap["otq"] = { get_cmd("TodoQuickFix"), "Todo quickfix" }
+	keymap["otl"] = { get_cmd("TodoLocList"), "Todo loclist" }
+	keymap["ott"] = { get_cmd("TodoTelescope"), "Todo Telescope" }
+	keymap["otT"] = { get_cmd("TodoTrouble"), "Todo Trouble" }
 
-    keymap["ot"] = { name = "+Todo" }
-    keymap["otq"] = { get_cmd("TodoQuickFix"), "Todo quickfix" }
-    keymap["otl"] = { get_cmd("TodoLocList"), "Todo loclist" }
-    keymap["ott"] = { get_cmd("TodoTelescope"), "Todo Telescope" }
-    keymap["otT"] = { get_cmd("TodoTrouble"), "Todo Trouble" }
+	keymap["on"] = { name = "+Notify" }
+	keymap["onn"] = { get_cmd("Notifications"), "Show Notifications" }
+	keymap["ont"] = { get_cmd("Noice telescope"), "Show Notifications in Telescope" }
+	keymap["onm"] = { get_cmd("messages"), "Show Messages" }
+	keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
+	keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
 
-    keymap["on"] = { name = "+Notify" }
-    keymap["onn"] = { get_cmd("Notifications"), "Show Notifications" }
-    keymap["ont"] = { get_cmd("Noice telescope"), "Show Notifications in Telescope" }
-    keymap["onm"] = { get_cmd("messages"), "Show Messages" }
-    keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
-    keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
+	keymap["om"] = { name = "+Marks" }
+	keymap["oma"] = { "<cmd>MarksListAll<CR>", "Show All Marks" }
+	keymap["omb"] = { "<cmd>MarksListBuf<CR>", "Show Marks in Buffer" }
+	keymap["omg"] = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" }
 
-    keymap["om"] = { name = "+Marks" }
-    keymap["oma"] = { "<cmd>MarksListAll<CR>", "Show All Marks" }
-    keymap["omb"] = { "<cmd>MarksListBuf<CR>", "Show Marks in Buffer" }
-    keymap["omg"] = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" }
+	keymap["ol"] = { "<cmd>e<CR>", "Reload File" }
+	keymap["oc"] = { "<cmd>pwd<CR>", "Show Current Folder" }
+	keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
+	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
 
-    keymap["ol"] = { "<cmd>e<CR>", "Reload File" }
-    keymap["oc"] = { "<cmd>pwd<CR>", "Show Current Folder" }
-    keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
-    keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
+	keymap["oh"] = { name = "+Harpoon" }
+	keymap["ohf"] = { ":lua require('harpoon.mark').add_file()<cr>", "Add File" }
+	keymap["oht"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
+	keymap["ohn"] = { ":lua require('harpoon.ui').nav_next()<cr>", "Next" }
+	keymap["ohp"] = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
+	keymap["ohh"] = { ":Telescope harpoon marks<cr>", "Telescope Harpoon" }
+	keymap["ohd"] = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
 
-    keymap["oh"] = { name = "+Harpoon" }
-    keymap["ohf"] = { ":lua require('harpoon.mark').add_file()<cr>", "Add File" }
-    keymap["oht"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
-    keymap["ohn"] = { ":lua require('harpoon.ui').nav_next()<cr>", "Next" }
-    keymap["ohp"] = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
-    keymap["ohh"] = { ":Telescope harpoon marks<cr>", "Telescope Harpoon" }
-    keymap["ohd"] = { ":lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
+	keymap["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
 
-    keymap["m"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
+	keymap["z"] = { name = "+Windows" }
+	keymap["zm"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
+	keymap["zv"] = { get_cmd("WindowsMaximizeVertically"), "Window Vertically Maximize" }
+	keymap["zh"] = { get_cmd("WindowsMaximizeHorizontally"), "Window Horizontally Maximize" }
+	keymap["ze"] = { get_cmd("WindowsEqualize"), "Window Equalize" }
 
-    keymap["z"] = { name = "+Windows" }
-    keymap["zm"] = { get_cmd("WindowsMaximize"), "Window Maximize" }
-    keymap["zv"] = { get_cmd("WindowsMaximizeVertically"), "Window Vertically Maximize" }
-    keymap["zh"] = { get_cmd("WindowsMaximizeHorizontally"), "Window Horizontally Maximize" }
-    keymap["ze"] = { get_cmd("WindowsEqualize"), "Window Equalize" }
+	keymap["a"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
 
-    keymap["a"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
+	keymap["S"] = { name = "+Session" }
+	keymap["Sc"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
+	keymap["Sl"] = { get_cmd("lua require('persistence').load({ last = true })"), "Restore last session" }
+	keymap["SQ"] = { get_cmd("lua require('persistence').stop()"), "Quit without saving session" }
 
-    keymap["S"] = { name = "+Session" }
-    keymap["Sc"] = { get_cmd("lua require('persistence').load()"), "Restore last session for current dir" }
-    keymap["Sl"] = { get_cmd("lua require('persistence').load({ last = true })"), "Restore last session" }
-    keymap["SQ"] = { get_cmd("lua require('persistence').stop()"), "Quit without saving session" }
+	keymap["t"] = { name = "Diagnostics" }
+	keymap["tt"] = { "<cmd>TroubleToggle<cr>", "trouble" }
+	keymap["tw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" }
+	keymap["td"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" }
+	keymap["tq"] = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" }
+	keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
+	keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
 
-    keymap["t"] = { name = "Diagnostics" }
-    keymap["tt"] = { "<cmd>TroubleToggle<cr>", "trouble" }
-    keymap["tw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" }
-    keymap["td"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" }
-    keymap["tq"] = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" }
-    keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
-    keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
+	-- search.replace.nvim config BEGIN
+	keymap["r"] = {
+		name = "SearchReplaceSingleBuffer",
+		s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
+		o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
+		w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
+		W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
+		e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
+		f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
+		b = {
+			name = "SearchReplaceMultiBuffer",
+			s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
+			o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
+			w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
+			W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
+			e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
+			f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
+		},
+	}
+	lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
+	lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
+	lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
+	vim.o.inccommand = "split"
+	-- search.replace.nvim config END
 
-    -- search.replace.nvim config BEGIN
-    keymap["r"] = {
-        name = "SearchReplaceSingleBuffer",
-        s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
-        o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
-        w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
-        W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
-        e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
-        f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
-        b = {
-            name = "SearchReplaceMultiBuffer",
-            s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
-            o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
-            w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
-            W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
-            e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
-            f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
-        },
-    }
-    lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
-    lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
-    lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
-    vim.o.inccommand = "split"
-    -- search.replace.nvim config END
+    vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+    vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+    vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+    vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+    vim.keymap.set("n", "B", function()
+        local winid = require("ufo").peekFoldedLinesUnderCursor()
+        if not winid then
+            -- choose one of coc.nvim and nvim lsp
+            vim.lsp.buf.hover()
+        end
+    end)
 end
 set_keymap()
 
@@ -196,6 +207,7 @@ lvim.builtin.treesitter.ensure_installed = {
 -- 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
+lvim.builtin.treesitter.rainbow.enable = true
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
@@ -232,7 +244,7 @@ lvim.plugins = {
 	{
 		"nathom/filetype.nvim",
 		lazy = true,
-		event = { "BufRead", "BufNewFile", "BufReadPre" },
+		event = { "User FileOpened" },
 		config = function()
 			require("filetype").setup({
 				overrides = {
@@ -294,19 +306,19 @@ lvim.plugins = {
 	{
 		"ggandor/leap.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+		keys = { "r", "R", "W" },
 		config = function()
 			require("leap").opts.highlight_unlabeled_phase_one_targets = true
 			-- leap.add_default_mappings()
-			vim.keymap.set({ "x", "o", "n" }, "R", "<Plug>(leap-forward-to)")
-			vim.keymap.set({ "x", "o", "n" }, "E", "<Plug>(leap-backward-to)")
+			vim.keymap.set({ "x", "o", "n" }, "r", "<Plug>(leap-forward-to)")
+			vim.keymap.set({ "x", "o", "n" }, "R", "<Plug>(leap-backward-to)")
 			vim.keymap.set({ "x", "o", "n" }, "W", "<Plug>(leap-from-window)")
 		end,
 	},
 	{
 		"ggandor/flit.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+		keys = { "f", "F", "t", "T" },
 		dependencies = { "ggandor/leap.nvim" },
 		config = function()
 			require("flit").setup({
@@ -325,7 +337,7 @@ lvim.plugins = {
 	{
 		"phaazon/hop.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { "E" },
 		config = function()
 			require("hop").setup({
 				-- keys = "etovxqpdygfblzhckisuran",
@@ -333,7 +345,7 @@ lvim.plugins = {
 				-- hint_position = require("hop.hint").HintPosition.MIDDLE,
 			})
 			-- vim.api.nvim_set_keymap("n", "R", ":HopChar2<cr>", { silent = true })
-			vim.api.nvim_set_keymap("n", "r", ":HopChar1<cr>", { silent = true })
+			vim.api.nvim_set_keymap("n", "E", ":HopChar1<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "W", ":HopWord<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "W", ":HopLine<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "P", ":HopPattern<cr>", { silent = true })
@@ -345,7 +357,7 @@ lvim.plugins = {
 		lazy = true,
 		event = { "User FileOpened" },
 		config = function()
-			lvim.builtin.treesitter.rainbow.enable = true
+            
 		end,
 	},
 	{
@@ -371,7 +383,7 @@ lvim.plugins = {
 	{
 		"folke/lsp-colors.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+		event = { "LspAttach" },
 		config = function()
 			require("lsp-colors").setup()
 		end,
@@ -379,7 +391,7 @@ lvim.plugins = {
 	{
 		"ray-x/lsp_signature.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+		event = { "LspAttach" },
 		config = function()
 			require("lsp_signature").on_attach()
 		end,
@@ -391,9 +403,9 @@ lvim.plugins = {
 	},
 	{
 		"rmagatti/goto-preview",
-        enabled = ENABLE_EXT,
+		enabled = ENABLE_EXT,
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { "gp" },
 		config = function()
 			require("goto-preview").setup({
 				width = 120, -- Width of the floating window
@@ -462,7 +474,7 @@ lvim.plugins = {
 	},
 	{
 		"kevinhwang91/nvim-bqf",
-        -- enabled = ENABLE_EXT,
+		-- enabled = ENABLE_EXT,
 		-- quickfix preview and other functions
 		lazy = true,
 		event = { "WinNew" },
@@ -510,7 +522,7 @@ lvim.plugins = {
 	},
 	{
 		"andymass/vim-matchup",
-        enabled = ENABLE_EXT,
+		enabled = ENABLE_EXT,
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
 		event = { "User FileOpened" },
@@ -536,11 +548,11 @@ lvim.plugins = {
 		"max397574/better-escape.nvim",
 		-- Custom keys to exit normal_mode
 		lazy = true,
-		event = { "User FileOpened" },
+		event = { "InsertEnter" },
 		config = function()
 			require("better_escape").setup({
 				mapping = { "jk", "jl" },
-				timeout = 150,
+				timeout = 300,
 				clear_empty_lines = false,
 				keys = "<Esc>",
 			})
@@ -550,7 +562,7 @@ lvim.plugins = {
 		"abecodes/tabout.nvim",
 		-- Use <Tab> jump out of quotes
 		lazy = true,
-		event = { "User FileOpened" },
+		event = { "InsertEnter" },
 		config = function()
 			require("tabout").setup({
 				tabkey = "<Tab>",
@@ -585,7 +597,7 @@ lvim.plugins = {
 	{
 		"ibhagwan/smartyank.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { "y", "Y" },
 		config = function()
 			require("smartyank").setup()
 		end,
@@ -594,7 +606,9 @@ lvim.plugins = {
 		"chentoast/marks.nvim",
 		-- Marks management
 		lazy = true,
-		event = { "User FileOpened" },
+        event = { "User FileOpened" },
+        -- keys = { "m" },
+        -- cmd = { "MarksListAll", "MarksListBuf", "MarksListGlobal" },
 		config = function()
 			require("marks").setup({
 				default_mappings = true,
@@ -723,8 +737,11 @@ lvim.plugins = {
 						["cmp.entry.get_documentation"] = true,
 					},
 				},
+                cmdline = {
+                    enabled = true,
+                },
 				presets = {
-					bottom_search = true,
+					bottom_search = false,
 					command_palette = true,
 					long_message_to_split = true,
 					inc_rename = false,
@@ -748,7 +765,6 @@ lvim.plugins = {
 		"kevinhwang91/nvim-ufo",
 		-- enabled = ENABLE_EXT,
 		lazy = true,
-		event = { "User FileOpened" },
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
@@ -758,17 +774,6 @@ lvim.plugins = {
 			vim.o.foldlevelstart = 99
 			vim.o.foldenable = true
 
-			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-			vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-			vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-			vim.keymap.set("n", "B", function()
-				local winid = require("ufo").peekFoldedLinesUnderCursor()
-				if not winid then
-					-- choose one of coc.nvim and nvim lsp
-					vim.lsp.buf.hover()
-				end
-			end)
 
 			vim.cmd([[highlight AdCustomFold guifg=#bf8040]])
 			local handler = function(virtText, lnum, endLnum, width, truncate)
@@ -875,7 +880,7 @@ lvim.plugins = {
 		"nacro90/numb.nvim",
 		enabled = ENABLE_EXT,
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { ":" },
 		config = function()
 			require("numb").setup({
 				show_numbers = true, -- Enable 'number' for the window while peeking
@@ -975,29 +980,28 @@ lvim.plugins = {
 				move_past_end_col = false,
 			})
 
-			local map = vim.api.nvim_set_keymap
-			map("n", "<M-h>", "<Plug>GoNSMLeft", { noremap = true, silent = true })
-			map("n", "<M-j>", "<Plug>GoNSMDown", { noremap = true, silent = true })
-			map("n", "<M-k>", "<Plug>GoNSMUp", { noremap = true, silent = true })
-			map("n", "<M-l>", "<Plug>GoNSMRight", { noremap = true, silent = true })
+            local map = vim.api.nvim_set_keymap
+            map("n", "<M-h>", "<Plug>GoNSMLeft", { noremap = true, silent = true })
+            map("n", "<M-j>", "<Plug>GoNSMDown", { noremap = true, silent = true })
+            map("n", "<M-k>", "<Plug>GoNSMUp", { noremap = true, silent = true })
+            map("n", "<M-l>", "<Plug>GoNSMRight", { noremap = true, silent = true })
 
-			map("x", "<M-h>", "<Plug>GoVSMLeft", { noremap = true, silent = true })
-			map("x", "<M-j>", "<Plug>GoVSMDown", { noremap = true, silent = true })
-			map("x", "<M-k>", "<Plug>GoVSMUp", { noremap = true, silent = true })
-			map("x", "<M-l>", "<Plug>GoVSMRight", { noremap = true, silent = true })
+            map("x", "<M-h>", "<Plug>GoVSMLeft", { noremap = true, silent = true })
+            map("x", "<M-j>", "<Plug>GoVSMDown", { noremap = true, silent = true })
+            map("x", "<M-k>", "<Plug>GoVSMUp", { noremap = true, silent = true })
+            map("x", "<M-l>", "<Plug>GoVSMRight", { noremap = true, silent = true })
 
-			map("x", "<C-h>", "<Plug>GoVSDLeft", { noremap = true, silent = true })
-			map("x", "<C-j>", "<Plug>GoVSDDown", { noremap = true, silent = true })
-			map("x", "<C-k>", "<Plug>GoVSDUp", { noremap = true, silent = true })
-			map("x", "<C-l>", "<Plug>GoVSDRight", { noremap = true, silent = true })
+            map("x", "<C-h>", "<Plug>GoVSDLeft", { noremap = true, silent = true })
+            map("x", "<C-j>", "<Plug>GoVSDDown", { noremap = true, silent = true })
+            map("x", "<C-k>", "<Plug>GoVSDUp", { noremap = true, silent = true })
+            map("x", "<C-l>", "<Plug>GoVSDRight", { noremap = true, silent = true })
 		end,
 	},
 	{
 		"ThePrimeagen/harpoon",
 		enabled = ENABLE_EXT and ENABLE_HARPOON,
 		lazy = true,
-        cmd = "Telescope harpoon marks",
-		event = "User FileOpened",
+		cmd = "Telescope harpoon marks",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -1020,7 +1024,7 @@ lvim.plugins = {
 		enabled = ENABLE_EXT,
 		dependencies = { "winston0410/cmd-parser.nvim" },
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { ":" },
 		config = function()
 			require("range-highlight").setup({})
 		end,
@@ -1028,7 +1032,22 @@ lvim.plugins = {
 	{
 		"roobert/search-replace.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+        cmd = {
+            "SearchReplaceSingleBufferVisualSelection",
+            "SearchReplaceWithinVisualSelection",
+            "SearchReplaceWithinVisualSelectionCWord",
+            "SearchReplaceSingleBufferSelections",
+            "SearchReplaceSingleBufferCWord",
+            "SearchReplaceSingleBufferCWORD",
+            "SearchReplaceSingleBufferCExpr",
+            "SearchReplaceSingleBufferCFile",
+            "SearchReplaceMultiBufferSelections",
+            "SearchReplaceMultiBufferOpen",
+            "SearchReplaceMultiBufferCWord",
+            "SearchReplaceMultiBufferCWORD",
+            "SearchReplaceMultiBufferCExpr",
+            "SearchReplaceMultiBufferCFile",
+        },
 		config = function()
 			require("search-replace").setup({
 				default_replace_single_buffer_options = "gcI",
@@ -1040,7 +1059,7 @@ lvim.plugins = {
 		"LeonHeidelbach/trailblazer.nvim",
 		enabled = ENABLE_EXT,
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { "<A-s>", "<A-d>" },
 		config = function()
 			-- local HOME = os.getenv("HOME")
 			require("trailblazer").setup({
@@ -1101,7 +1120,7 @@ lvim.plugins = {
 	{
 		"chrisgrieser/nvim-recorder",
 		lazy = true,
-		event = { "User FileOpened" },
+        keys = { "q", "Q", "<A-q>", "cq", "yq" },
 		config = function()
 			require("recorder").setup({
 				slots = { "u", "i", "o" },
@@ -1111,7 +1130,7 @@ lvim.plugins = {
 					switchSlot = "<A-q>",
 					editMacro = "cq",
 					yankMacro = "yq",
-					addBreakPoint = "##",
+					-- addBreakPoint = "##",
 				},
 				-- clear = false,
 				-- logLevel = vim.log.levels.INFO,
