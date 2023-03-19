@@ -96,6 +96,8 @@ local function set_keymap()
 	keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
 	keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
 
+    keymap["gt"] = { "<cmd>GitBlameToggle<cr>", "Toggle Git Blame" }
+
 	-- search.replace.nvim config BEGIN
 	keymap["r"] = {
 		name = "SearchReplaceSingleBuffer",
@@ -220,10 +222,10 @@ formatters.setup({
 		extra_args = { "--print-width", "100" },
 		filetypes = { "typescript", "typescriptreact" },
 	},
-    {
-        command = "markdownlint",
-        filetypes = { "markdown", "md" },
-    }
+	{
+		command = "markdownlint",
+		filetypes = { "markdown", "md" },
+	},
 })
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
@@ -969,7 +971,7 @@ lvim.plugins = {
 		lazy = true,
 		cmd = {
 			"SearchReplaceSingleBufferVisualSelection",
-            "SearchReplaceSingleBufferOpen",
+			"SearchReplaceSingleBufferOpen",
 			"SearchReplaceWithinVisualSelection",
 			"SearchReplaceWithinVisualSelectionCWord",
 			"SearchReplaceSingleBufferSelections",
@@ -1201,6 +1203,14 @@ lvim.plugins = {
 					},
 				},
 			})
+		end,
+	},
+	{
+		"f-person/git-blame.nvim",
+        lazy = true,
+        cmd = "GitBlameToggle",
+		config = function()
+			vim.cmd("highlight default link gitblame SpecialComment")
 		end,
 	},
 }
