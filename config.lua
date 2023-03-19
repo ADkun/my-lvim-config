@@ -96,7 +96,7 @@ local function set_keymap()
 	keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
 	keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
 
-    keymap["gt"] = { "<cmd>GitBlameToggle<cr>", "Toggle Git Blame" }
+	keymap["gt"] = { "<cmd>GitBlameToggle<cr>", "Toggle Git Blame" }
 
 	-- search.replace.nvim config BEGIN
 	keymap["r"] = {
@@ -1207,10 +1207,49 @@ lvim.plugins = {
 	},
 	{
 		"f-person/git-blame.nvim",
-        lazy = true,
-        cmd = "GitBlameToggle",
+		lazy = true,
+		cmd = "GitBlameToggle",
 		config = function()
 			vim.cmd("highlight default link gitblame SpecialComment")
+		end,
+	},
+	{
+		"tpope/vim-repeat",
+		lazy = true,
+		keys = ".",
+	},
+	{
+		"karb94/neoscroll.nvim",
+		lazy = true,
+		-- event = "WinScrolled",
+		keys = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+		config = function()
+			require("neoscroll").setup({
+				-- All these keys will be mapped to their corresponding default scrolling animation
+				-- mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+				hide_cursor = true,
+				stop_eof = true,
+				use_local_scrolloff = false,
+				respect_scrolloff = false,
+				cursor_scrolls_alone = true,
+				-- quadratic, cubic, quartic, quintic, circular, sine
+				easing_function = "cubic",
+				pre_hook = nil,
+				post_hook = nil,
+			})
+
+			local t = {}
+			t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "50", [['cubic']] } }
+			t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "50", [['cubic']] } }
+			t["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] } }
+			t["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] } }
+			t["<C-y>"] = { "scroll", { "-0.10", "false", "50", [['cubic']] } }
+			t["<C-e>"] = { "scroll", { "0.10", "false", "50", [['cubic']] } }
+			t["zt"] = { "zt", { "100", [['cubic']] } }
+			t["zz"] = { "zz", { "100", [['cubic']] } }
+			t["zb"] = { "zb", { "100", [['cubic']] } }
+
+			require("neoscroll.config").set_mappings(t)
 		end,
 	},
 }
