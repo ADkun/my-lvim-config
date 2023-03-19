@@ -253,7 +253,7 @@ lvim.plugins = {
 	{
 		"nathom/filetype.nvim",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			require("filetype").setup({
 				overrides = {
@@ -340,7 +340,7 @@ lvim.plugins = {
 	{
 		"phaazon/hop.nvim",
 		lazy = true,
-		keys = { "r" },
+        keys = { "r" },
 		config = function()
 			require("hop").setup({
 				-- keys = "etovxqpdygfblzhckisuran",
@@ -358,13 +358,13 @@ lvim.plugins = {
 		"HiPhish/nvim-ts-rainbow2",
 		-- Bracket pair rainbow colorize
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 	},
 	{
 		"romgrk/nvim-treesitter-context",
 		-- Show context of code such as function name, class name, labels
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			require("treesitter-context").setup({
 				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -383,12 +383,12 @@ lvim.plugins = {
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 	},
 	{
 		"rmagatti/goto-preview",
 		lazy = true,
-		keys = { "gp" },
+        keys = "gp",
 		config = function()
 			require("goto-preview").setup({
 				width = 120, -- Width of the floating window
@@ -408,7 +408,7 @@ lvim.plugins = {
 	{
 		"ethanholz/nvim-lastplace",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			require("nvim-lastplace").setup({
 				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
@@ -444,7 +444,7 @@ lvim.plugins = {
 		"windwp/nvim-spectre",
 		-- Replace all
 		lazy = true,
-		cmd = { "Spectre" },
+        cmd = "Spectre",
 		config = function()
 			require("spectre").setup()
 		end,
@@ -453,7 +453,7 @@ lvim.plugins = {
 		"kevinhwang91/nvim-bqf",
 		-- quickfix preview and other functions
 		lazy = true,
-		event = { "WinNew" },
+        ft = "qf",
 		config = function()
 			require("bqf").setup({
 				auto_enable = true,
@@ -500,7 +500,7 @@ lvim.plugins = {
 		"andymass/vim-matchup",
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			vim.g.matchup_matchparen_offscreen = { method = "popup" }
 			lvim.builtin.treesitter.matchup.enable = true
@@ -523,7 +523,7 @@ lvim.plugins = {
 		"max397574/better-escape.nvim",
 		-- Custom keys to exit normal_mode
 		lazy = true,
-		event = { "InsertEnter" },
+        event = "InsertEnter",
 		config = function()
 			require("better_escape").setup({
 				mapping = { "jk", "jl" },
@@ -537,7 +537,7 @@ lvim.plugins = {
 		"abecodes/tabout.nvim",
 		-- Use <Tab> jump out of quotes
 		lazy = true,
-		event = { "InsertEnter" },
+        event = "InsertEnter",
 		config = function()
 			require("tabout").setup({
 				tabkey = "<Tab>",
@@ -581,7 +581,7 @@ lvim.plugins = {
 		"chentoast/marks.nvim",
 		-- Marks management
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			require("marks").setup({
 				default_mappings = true,
@@ -664,7 +664,7 @@ lvim.plugins = {
 	{
 		"rcarriga/nvim-notify",
 		lazy = true,
-		event = "VeryLazy",
+		-- event = "VeryLazy",
 		config = function()
 			local notify = require("notify")
 			notify.setup({
@@ -692,7 +692,6 @@ lvim.plugins = {
 	},
 	{
 		"folke/noice.nvim",
-		enabled = ENABLE_NOICE,
 		lazy = true,
 		event = "User FileOpened",
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
@@ -804,7 +803,7 @@ lvim.plugins = {
 	{
 		"s1n7ax/nvim-window-picker",
 		lazy = true,
-		event = { "WinNew" },
+        event = "WinNew",
 		config = function()
 			local picker = require("window-picker")
 			picker.setup({
@@ -927,7 +926,7 @@ lvim.plugins = {
 	{
 		"booperlv/nvim-gomove",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			require("gomove").setup({
 				map_defaults = false,
@@ -1075,7 +1074,7 @@ lvim.plugins = {
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		config = function()
 			require("various-textobjs").setup({
 				useDefaultKeymaps = true,
@@ -1093,7 +1092,7 @@ lvim.plugins = {
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
@@ -1188,7 +1187,7 @@ lvim.plugins = {
 	{
 		"RRethy/nvim-treesitter-textsubjects",
 		lazy = true,
-		event = { "User FileOpened" },
+        event = "User FileOpened",
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
