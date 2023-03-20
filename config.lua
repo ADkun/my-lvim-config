@@ -212,6 +212,10 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
+    {
+        command = "beautysh",
+        filetypes = { "sh" }
+    },
 	{ command = "stylua" },
 	{
 		command = "black",
