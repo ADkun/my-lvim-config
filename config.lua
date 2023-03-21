@@ -38,6 +38,10 @@ local function set_keymap()
 	vkeymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
 	keymap["osf"] = { "viw<cmd>lua require('spectre').open_file_search()<CR>", "Spectre in File" }
 
+    -- Diagnostic
+    keymap['n'] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" }
+    keymap['v'] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" }
+
 	keymap["ot"] = { name = "+Todo" }
 	keymap["otq"] = { "<cmd>TodoQuickFix<cr>", "Todo quickfix" }
 	keymap["otl"] = { "<cmd>TodoLocList<cr>", "Todo loclist" }
