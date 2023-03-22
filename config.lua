@@ -261,7 +261,7 @@ lvim.plugins = {
 	{
 		"nathom/filetype.nvim",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			require("filetype").setup({
 				overrides = {
@@ -366,13 +366,13 @@ lvim.plugins = {
 		"HiPhish/nvim-ts-rainbow2",
 		-- Bracket pair rainbow colorize
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 	},
 	{
 		"romgrk/nvim-treesitter-context",
 		-- Show context of code such as function name, class name, labels
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			require("treesitter-context").setup({
 				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -391,7 +391,7 @@ lvim.plugins = {
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 	},
 	{
 		"rmagatti/goto-preview",
@@ -416,7 +416,7 @@ lvim.plugins = {
 	{
 		"ethanholz/nvim-lastplace",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			require("nvim-lastplace").setup({
 				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
@@ -434,7 +434,7 @@ lvim.plugins = {
 		"folke/todo-comments.nvim",
 		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
 		lazy = true,
-		event = { "User FileOpened" },
+		event = { "BufRead" },
 		config = function()
 			require("todo-comments").setup()
 		end,
@@ -508,7 +508,7 @@ lvim.plugins = {
 		"andymass/vim-matchup",
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			vim.g.matchup_matchparen_offscreen = { method = "popup" }
 			lvim.builtin.treesitter.matchup.enable = true
@@ -580,7 +580,7 @@ lvim.plugins = {
 	{
 		"ibhagwan/smartyank.nvim",
 		lazy = true,
-		event = "User FileOpened",
+		event = "BufRead",
 		config = function()
 			require("smartyank").setup()
 		end,
@@ -589,7 +589,7 @@ lvim.plugins = {
 		"chentoast/marks.nvim",
 		-- Marks management
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			require("marks").setup({
 				default_mappings = true,
@@ -701,7 +701,7 @@ lvim.plugins = {
 	{
 		"folke/noice.nvim",
 		lazy = true,
-		event = "User FileOpened",
+		event = "BufRead",
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
 		config = function()
 			require("noice").setup({
@@ -934,7 +934,7 @@ lvim.plugins = {
 	{
 		"booperlv/nvim-gomove",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			require("gomove").setup({
 				map_defaults = false,
@@ -1082,7 +1082,7 @@ lvim.plugins = {
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		config = function()
 			require("various-textobjs").setup({
 				useDefaultKeymaps = true,
@@ -1100,7 +1100,7 @@ lvim.plugins = {
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
@@ -1195,7 +1195,7 @@ lvim.plugins = {
 	{
 		"RRethy/nvim-treesitter-textsubjects",
 		lazy = true,
-        event = "User FileOpened",
+        event = "BufRead",
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
