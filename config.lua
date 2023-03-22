@@ -7,6 +7,9 @@ vim.opt.tabstop = 4
 vim.opt.relativenumber = true
 vim.opt.cursorcolumn = true
 
+-- nightfox dayfox dawnfox duskfox nordfox terafox carbonfox
+lvim.colorscheme = "carbonfox"
+
 -- general
 lvim.log.level = "info"
 lvim.format_on_save = {
@@ -152,10 +155,6 @@ local function set_keymap()
 	end)
 end
 set_keymap()
-
--- -- Change theme settings
--- lvim.colorscheme = "one_monokai"
-lvim.colorscheme = "OceanicNext"
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -678,9 +677,26 @@ lvim.plugins = {
 	},
 	{
 		"mhartington/oceanic-next",
-		priority = 1000,
+		priority = 500,
 		lazy = lvim.colorscheme ~= "OceanicNext",
 	},
+    {
+        "EdenEast/nightfox.nvim",
+        priority = 1000,
+        lazy = false,
+        config = function ()
+            require("nightfox").setup({
+                options = {
+                    transparent = false,
+                    -- styles = {
+                    --     comments = "italic",
+                    --     keywords = "bold",
+                    --     types = "italic,bold",
+                    -- }
+                },
+            })
+        end
+    },
 	{
 		"rcarriga/nvim-notify",
 		lazy = true,
