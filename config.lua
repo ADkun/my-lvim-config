@@ -38,9 +38,9 @@ local function set_keymap()
 	vkeymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
 	keymap["osf"] = { "viw<cmd>lua require('spectre').open_file_search()<CR>", "Spectre in File" }
 
-    -- Diagnostic
-    keymap['n'] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" }
-    keymap['v'] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" }
+	-- Diagnostic
+	keymap["n"] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" }
+	keymap["v"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" }
 
 	keymap["ot"] = { name = "+Todo" }
 	keymap["otq"] = { "<cmd>TodoQuickFix<cr>", "Todo quickfix" }
@@ -99,6 +99,18 @@ local function set_keymap()
 	keymap["tq"] = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" }
 	keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
 	keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
+
+    -- diffview
+    keymap["od"] = { name = "+Diffview" }
+    keymap["odo"] = { "<cmd>DiffviewOpen<cr>", "Open" }
+    keymap["odmo"] = { ":DiffviewOpen ", "Open with args" }
+    keymap["odc"] = { "<cmd>DiffviewClose<cr>", "Close the current diffview" }
+    keymap["odt"] = { "<cmd>DiffviewToggleFiles<cr>", "Toggle the file panel" }
+    keymap["odf"] = { "<cmd>DiffviewFocusFiles<cr>", "Focus to the file panel" }
+    keymap["odr"] = { "<cmd>DiffviewRefresh<cr>", "Update" }
+    keymap["odh"] = { "<cmd>DiffviewFileHistory<cr>", "File history" }
+    keymap["odmh"] = { ":DiffviewFileHistory ", "File history with args" }
+    vkeymap["ods"] = { ":'<,'>DiffviewFileHistory<cr>", "File history select" }
 
 	keymap["gt"] = { "<cmd>GitBlameToggle<cr>", "Toggle Git Blame" }
 
@@ -216,10 +228,10 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
-    {
-        command = "beautysh",
-        filetypes = { "sh" }
-    },
+	{
+		command = "beautysh",
+		filetypes = { "sh" },
+	},
 	{ command = "stylua" },
 	{
 		command = "black",
@@ -261,7 +273,7 @@ lvim.plugins = {
 	{
 		"nathom/filetype.nvim",
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		config = function()
 			require("filetype").setup({
 				overrides = {
@@ -348,7 +360,7 @@ lvim.plugins = {
 	{
 		"phaazon/hop.nvim",
 		lazy = true,
-        keys = { "r" },
+		keys = { "r" },
 		config = function()
 			require("hop").setup({
 				-- keys = "etovxqpdygfblzhckisuran",
@@ -366,13 +378,13 @@ lvim.plugins = {
 		"HiPhish/nvim-ts-rainbow2",
 		-- Bracket pair rainbow colorize
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 	},
 	{
 		"romgrk/nvim-treesitter-context",
 		-- Show context of code such as function name, class name, labels
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		config = function()
 			require("treesitter-context").setup({
 				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -391,12 +403,12 @@ lvim.plugins = {
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 	},
 	{
 		"rmagatti/goto-preview",
 		lazy = true,
-        keys = "gp",
+		keys = "gp",
 		config = function()
 			require("goto-preview").setup({
 				width = 120, -- Width of the floating window
@@ -416,7 +428,7 @@ lvim.plugins = {
 	{
 		"ethanholz/nvim-lastplace",
 		lazy = true,
-        event = { "BufRead" },
+		event = { "BufRead" },
 		config = function()
 			require("nvim-lastplace").setup({
 				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
@@ -452,7 +464,7 @@ lvim.plugins = {
 		"windwp/nvim-spectre",
 		-- Replace all
 		lazy = true,
-        cmd = "Spectre",
+		cmd = "Spectre",
 		config = function()
 			require("spectre").setup()
 		end,
@@ -461,7 +473,7 @@ lvim.plugins = {
 		"kevinhwang91/nvim-bqf",
 		-- quickfix preview and other functions
 		lazy = true,
-        ft = "qf",
+		ft = "qf",
 		config = function()
 			require("bqf").setup({
 				auto_enable = true,
@@ -508,7 +520,7 @@ lvim.plugins = {
 		"andymass/vim-matchup",
 		-- Highlight, jump between pairs like if..else
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		config = function()
 			vim.g.matchup_matchparen_offscreen = { method = "popup" }
 			lvim.builtin.treesitter.matchup.enable = true
@@ -531,7 +543,7 @@ lvim.plugins = {
 		"max397574/better-escape.nvim",
 		-- Custom keys to exit normal_mode
 		lazy = true,
-        event = "InsertEnter",
+		event = "InsertEnter",
 		config = function()
 			require("better_escape").setup({
 				mapping = { "jk", "jl" },
@@ -545,7 +557,7 @@ lvim.plugins = {
 		"abecodes/tabout.nvim",
 		-- Use <Tab> jump out of quotes
 		lazy = true,
-        event = "InsertEnter",
+		event = "InsertEnter",
 		config = function()
 			require("tabout").setup({
 				tabkey = "<Tab>",
@@ -589,7 +601,7 @@ lvim.plugins = {
 		"chentoast/marks.nvim",
 		-- Marks management
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		config = function()
 			require("marks").setup({
 				default_mappings = true,
@@ -811,7 +823,7 @@ lvim.plugins = {
 	{
 		"s1n7ax/nvim-window-picker",
 		lazy = true,
-        event = "WinNew",
+		event = "WinNew",
 		config = function()
 			local picker = require("window-picker")
 			picker.setup({
@@ -934,7 +946,7 @@ lvim.plugins = {
 	{
 		"booperlv/nvim-gomove",
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		config = function()
 			require("gomove").setup({
 				map_defaults = false,
@@ -1082,7 +1094,7 @@ lvim.plugins = {
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		config = function()
 			require("various-textobjs").setup({
 				useDefaultKeymaps = true,
@@ -1100,7 +1112,7 @@ lvim.plugins = {
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
@@ -1195,7 +1207,7 @@ lvim.plugins = {
 	{
 		"RRethy/nvim-treesitter-textsubjects",
 		lazy = true,
-        event = { "BufRead", "BufNewFile" },
+		event = { "BufRead", "BufNewFile" },
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
@@ -1258,6 +1270,19 @@ lvim.plugins = {
 
 			require("neoscroll.config").set_mappings(t)
 		end,
+	},
+	{
+		"sindrets/diffview.nvim",
+		lazy = true,
+		cmd = {
+			"DiffviewOpen",
+			"DiffviewClose",
+			"DiffviewToggleFiles",
+			"DiffviewFocusFiles",
+			"DiffviewRefresh",
+			"DiffviewFileHistory",
+		},
+		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 }
 
