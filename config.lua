@@ -1,6 +1,3 @@
-local ENABLE_NOICE = true
-local ENABLE_HARPOON = true
-
 -- vim options
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -8,7 +5,11 @@ vim.opt.relativenumber = true
 vim.opt.cursorcolumn = true
 
 -- nightfox dayfox dawnfox duskfox nordfox terafox carbonfox
-lvim.colorscheme = "carbonfox"
+-- OceanicNext
+-- onedark onelight onedark_vivid onedark_dark
+-- one_monokai
+lvim.colorscheme = "onedark"
+local COLOR_TRANS = false
 
 -- general
 lvim.log.level = "info"
@@ -27,134 +28,6 @@ lvim.keys.normal_mode["<C-s>"] = "<cmd>w<cr>"
 lvim.keys.normal_mode["<S-l>"] = "<cmd>BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 
-local function set_keymap()
-	local keymap = lvim.builtin.which_key.mappings
-	local vkeymap = lvim.builtin.which_key.vmappings
-	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
-	keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-	keymap["o"] = { name = "+Custom" }
-	keymap["ow"] = { "<cmd>setlocal wrap!<cr>", "Toggle Soft Wrap" }
-
-	keymap["os"] = { name = "+Spectre" }
-	keymap["oss"] = { "<cmd>lua require('spectre').open()<cr>", "Spectre Open" }
-	vkeymap["osw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Spectre in Visual Word" }
-	vkeymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
-	keymap["osf"] = { "viw<cmd>lua require('spectre').open_file_search()<CR>", "Spectre in File" }
-
-	-- Diagnostic
-	keymap["n"] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" }
-	keymap["v"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" }
-
-	keymap["ot"] = { name = "+Todo" }
-	keymap["otq"] = { "<cmd>TodoQuickFix<cr>", "Todo quickfix" }
-	keymap["otl"] = { "<cmd>TodoLocList<cr>", "Todo loclist" }
-	keymap["ott"] = { "<cmd>TodoTelescope<cr>", "Todo Telescope" }
-	keymap["otT"] = { "<cmd>TodoTrouble<cr>", "Todo Trouble" }
-
-	keymap["on"] = { name = "+Notify" }
-	keymap["onn"] = { "<cmd>Notifications<cr>", "Show Notifications" }
-	keymap["ont"] = { "<cmd>Noice telescope<cr>", "Show Notifications in Telescope" }
-	keymap["onm"] = { "<cmd>messages<cr>", "Show Messages" }
-	keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
-	keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
-
-	keymap["om"] = { name = "+Marks" }
-	keymap["oma"] = { "<cmd>MarksListAll<CR>", "Show All Marks" }
-	keymap["omb"] = { "<cmd>MarksListBuf<CR>", "Show Marks in Buffer" }
-	keymap["omg"] = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" }
-
-	keymap["ol"] = { "<cmd>e<CR>", "Reload File" }
-	keymap["oc"] = { "<cmd>pwd<CR>", "Show Current Folder" }
-	keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
-	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
-
-	keymap["oh"] = { name = "+Harpoon" }
-	keymap["ohf"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" }
-	keymap["oht"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
-	keymap["ohn"] = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "Next" }
-	keymap["ohp"] = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
-	keymap["ohh"] = { "<cmd>Telescope harpoon marks<cr>", "Telescope Harpoon" }
-	keymap["ohd"] = { "<cmd>lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
-
-	keymap["ou"] = { "+Ufo" }
-	keymap["oud"] = { "<cmd>UfoDisable<cr>", "Disable Ufo" }
-	keymap["oue"] = { "<cmd>UfoEnable<cr>", "Enable Ufo" }
-
-	keymap["m"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
-
-	keymap["z"] = { name = "+Windows" }
-	keymap["zm"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
-	keymap["zv"] = { "<cmd>WindowsMaximizeVertically<cr>", "Window Vertically Maximize" }
-	keymap["zh"] = { "<cmd>WindowsMaximizeHorizontally<cr>", "Window Horizontally Maximize" }
-	keymap["ze"] = { "<cmd>WindowsEqualize<cr>", "Window Equalize" }
-
-	keymap["a"] = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" }
-
-	keymap["S"] = { name = "+Session" }
-	keymap["Sc"] = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" }
-	keymap["Sl"] = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" }
-	keymap["SQ"] = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" }
-
-	keymap["t"] = { name = "Diagnostics" }
-	keymap["tt"] = { "<cmd>TroubleToggle<cr>", "trouble" }
-	keymap["tw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" }
-	keymap["td"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" }
-	keymap["tq"] = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" }
-	keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
-	keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
-
-    -- diffview
-    keymap["od"] = { name = "+Diffview" }
-    keymap["odo"] = { "<cmd>DiffviewOpen<cr>", "Open" }
-    keymap["odmo"] = { ":DiffviewOpen ", "Open with args" }
-    keymap["odc"] = { "<cmd>DiffviewClose<cr>", "Close the current diffview" }
-    keymap["odt"] = { "<cmd>DiffviewToggleFiles<cr>", "Toggle the file panel" }
-    keymap["odf"] = { "<cmd>DiffviewFocusFiles<cr>", "Focus to the file panel" }
-    keymap["odr"] = { "<cmd>DiffviewRefresh<cr>", "Update" }
-    keymap["odh"] = { "<cmd>DiffviewFileHistory<cr>", "File history" }
-    keymap["odmh"] = { ":DiffviewFileHistory ", "File history with args" }
-    vkeymap["ods"] = { ":'<,'>DiffviewFileHistory<cr>", "File history select" }
-
-	keymap["gt"] = { "<cmd>GitBlameToggle<cr>", "Toggle Git Blame" }
-
-	-- search.replace.nvim config BEGIN
-	keymap["r"] = {
-		name = "SearchReplaceSingleBuffer",
-		s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
-		o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
-		w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
-		W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
-		e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
-		f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
-		b = {
-			name = "SearchReplaceMultiBuffer",
-			s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
-			o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
-			w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
-			W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
-			e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
-			f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
-		},
-	}
-	lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
-	lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
-	lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
-	vim.o.inccommand = "split"
-	-- search.replace.nvim config END
-
-	vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-	vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-	vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-	vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-	vim.keymap.set("n", "B", function()
-		local winid = require("ufo").peekFoldedLinesUnderCursor()
-		if not winid then
-			-- choose one of coc.nvim and nvim lsp
-			vim.lsp.buf.hover()
-		end
-	end)
-end
-set_keymap()
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -677,26 +550,70 @@ lvim.plugins = {
 	},
 	{
 		"mhartington/oceanic-next",
-		priority = 500,
+		priority = 1000,
 		lazy = lvim.colorscheme ~= "OceanicNext",
 	},
-    {
-        "EdenEast/nightfox.nvim",
-        priority = 1000,
-        lazy = false,
-        config = function ()
-            require("nightfox").setup({
+	{
+		"EdenEast/nightfox.nvim",
+		priority = 1000,
+		lazy = lvim.colorscheme ~= "nightfox"
+			and lvim.colorscheme ~= "carbonfox"
+			and lvim.colorscheme ~= "nordfox"
+			and lvim.colorscheme ~= "terafox"
+			and lvim.colorscheme ~= "duskfox",
+		config = function()
+			require("nightfox").setup({
+				options = {
+					transparent = COLOR_TRANS,
+					-- styles = {
+					--     comments = "italic",
+					--     keywords = "bold",
+					--     types = "italic,bold",
+					-- }
+				},
+			})
+		end,
+	},
+	{
+		"cpea2506/one_monokai.nvim",
+		lazy = lvim.colorscheme ~= "one_monokai",
+		config = function()
+			require("one_monokai").setup({
+				transparent = COLOR_TRANS,
+			})
+		end,
+	},
+	{
+		"olimorris/onedarkpro.nvim",
+		priority = 1000,
+		lazy = lvim.colorscheme ~= "onedark"
+			and lvim.colorscheme ~= "onelight"
+			and lvim.colorscheme ~= "onedark_vivid"
+			and lvim.colorscheme ~= "onedark_dark",
+		config = function()
+			require("onedarkpro").setup({
+				-- styles = {
+				-- 	types = "NONE",
+				-- 	methods = "NONE",
+				-- 	numbers = "NONE",
+				-- 	strings = "NONE",
+					-- comments = "italic",
+					-- keywords = "bold,italic",
+				-- 	constants = "NONE",
+				-- 	functions = "italic",
+				-- 	operators = "NONE",
+				-- 	variables = "NONE",
+				-- 	parameters = "NONE",
+				-- 	conditionals = "italic",
+				-- 	virtual_text = "NONE",
+				-- },
                 options = {
-                    transparent = false,
-                    -- styles = {
-                    --     comments = "italic",
-                    --     keywords = "bold",
-                    --     types = "italic,bold",
-                    -- }
-                },
-            })
-        end
-    },
+                    transparency = COLOR_TRANS,
+                    cursorline = true,
+                }
+			})
+		end,
+	},
 	{
 		"rcarriga/nvim-notify",
 		lazy = true,
@@ -990,7 +907,6 @@ lvim.plugins = {
 	},
 	{
 		"ThePrimeagen/harpoon",
-		enabled = ENABLE_HARPOON,
 		lazy = true,
 		cmd = "Telescope harpoon marks",
 		dependencies = {
@@ -1332,3 +1248,132 @@ lvim.plugins = {
 -- 		end
 -- 	end,
 -- })
+
+local function set_keymap()
+	local keymap = lvim.builtin.which_key.mappings
+	local vkeymap = lvim.builtin.which_key.vmappings
+	keymap["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+	keymap["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+	keymap["o"] = { name = "+Custom" }
+	keymap["ow"] = { "<cmd>setlocal wrap!<cr>", "Toggle Soft Wrap" }
+
+	keymap["os"] = { name = "+Spectre" }
+	keymap["oss"] = { "<cmd>lua require('spectre').open()<cr>", "Spectre Open" }
+	vkeymap["osw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Spectre in Visual Word" }
+	vkeymap["osv"] = { "<esc><cmd>lua require('spectre').open_visual()<CR>", "Spectre in Visual" }
+	keymap["osf"] = { "viw<cmd>lua require('spectre').open_file_search()<CR>", "Spectre in File" }
+
+	-- Diagnostic
+	keymap["n"] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" }
+	keymap["v"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" }
+
+	keymap["ot"] = { name = "+Todo" }
+	keymap["otq"] = { "<cmd>TodoQuickFix<cr>", "Todo quickfix" }
+	keymap["otl"] = { "<cmd>TodoLocList<cr>", "Todo loclist" }
+	keymap["ott"] = { "<cmd>TodoTelescope<cr>", "Todo Telescope" }
+	keymap["otT"] = { "<cmd>TodoTrouble<cr>", "Todo Trouble" }
+
+	keymap["on"] = { name = "+Notify" }
+	keymap["onn"] = { "<cmd>Notifications<cr>", "Show Notifications" }
+	keymap["ont"] = { "<cmd>Noice telescope<cr>", "Show Notifications in Telescope" }
+	keymap["onm"] = { "<cmd>messages<cr>", "Show Messages" }
+	keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
+	keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
+
+	keymap["om"] = { name = "+Marks" }
+	keymap["oma"] = { "<cmd>MarksListAll<CR>", "Show All Marks" }
+	keymap["omb"] = { "<cmd>MarksListBuf<CR>", "Show Marks in Buffer" }
+	keymap["omg"] = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" }
+
+	keymap["ol"] = { "<cmd>e<CR>", "Reload File" }
+	keymap["oc"] = { "<cmd>pwd<CR>", "Show Current Folder" }
+	keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
+	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
+
+	keymap["oh"] = { name = "+Harpoon" }
+	keymap["ohf"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" }
+	keymap["oht"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle Menu" }
+	keymap["ohn"] = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "Next" }
+	keymap["ohp"] = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "Prev" }
+	keymap["ohh"] = { "<cmd>Telescope harpoon marks<cr>", "Telescope Harpoon" }
+	keymap["ohd"] = { "<cmd>lua require('harpoon.mark').rm_file()<cr>", "Remove File" }
+
+	keymap["ou"] = { "+Ufo" }
+	keymap["oud"] = { "<cmd>UfoDisable<cr>", "Disable Ufo" }
+	keymap["oue"] = { "<cmd>UfoEnable<cr>", "Enable Ufo" }
+
+	keymap["m"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
+
+	keymap["z"] = { name = "+Windows" }
+	keymap["zm"] = { "<cmd>WindowsMaximize<cr>", "Window Maximize" }
+	keymap["zv"] = { "<cmd>WindowsMaximizeVertically<cr>", "Window Vertically Maximize" }
+	keymap["zh"] = { "<cmd>WindowsMaximizeHorizontally<cr>", "Window Horizontally Maximize" }
+	keymap["ze"] = { "<cmd>WindowsEqualize<cr>", "Window Equalize" }
+
+	keymap["a"] = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" }
+
+	keymap["S"] = { name = "+Session" }
+	keymap["Sc"] = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" }
+	keymap["Sl"] = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" }
+	keymap["SQ"] = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" }
+
+	keymap["t"] = { name = "Diagnostics" }
+	keymap["tt"] = { "<cmd>TroubleToggle<cr>", "trouble" }
+	keymap["tw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" }
+	keymap["td"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" }
+	keymap["tq"] = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" }
+	keymap["tl"] = { "<cmd>TroubleToggle loclist<cr>", "loclist" }
+	keymap["tr"] = { "<cmd>TroubleToggle lsp_references<cr>", "references" }
+
+	-- diffview
+	keymap["od"] = { name = "+Diffview" }
+	keymap["odo"] = { "<cmd>DiffviewOpen<cr>", "Open" }
+	keymap["odmo"] = { ":DiffviewOpen ", "Open with args" }
+	keymap["odc"] = { "<cmd>DiffviewClose<cr>", "Close the current diffview" }
+	keymap["odt"] = { "<cmd>DiffviewToggleFiles<cr>", "Toggle the file panel" }
+	keymap["odf"] = { "<cmd>DiffviewFocusFiles<cr>", "Focus to the file panel" }
+	keymap["odr"] = { "<cmd>DiffviewRefresh<cr>", "Update" }
+	keymap["odh"] = { "<cmd>DiffviewFileHistory<cr>", "File history" }
+	keymap["odmh"] = { ":DiffviewFileHistory ", "File history with args" }
+	vkeymap["ods"] = { ":'<,'>DiffviewFileHistory<cr>", "File history select" }
+
+	keymap["gt"] = { "<cmd>GitBlameToggle<cr>", "Toggle Git Blame" }
+
+	-- search.replace.nvim config BEGIN
+	keymap["r"] = {
+		name = "SearchReplaceSingleBuffer",
+		s = { "<CMD>SearchReplaceSingleBufferSelections<CR>", "SearchReplaceSingleBuffer [s]elction list" },
+		o = { "<CMD>SearchReplaceSingleBufferOpen<CR>", "[o]pen" },
+		w = { "<CMD>SearchReplaceSingleBufferCWord<CR>", "[w]ord" },
+		W = { "<CMD>SearchReplaceSingleBufferCWORD<CR>", "[W]ORD" },
+		e = { "<CMD>SearchReplaceSingleBufferCExpr<CR>", "[e]xpr" },
+		f = { "<CMD>SearchReplaceSingleBufferCFile<CR>", "[f]ile" },
+		b = {
+			name = "SearchReplaceMultiBuffer",
+			s = { "<CMD>SearchReplaceMultiBufferSelections<CR>", "SearchReplaceMultiBuffer [s]elction list" },
+			o = { "<CMD>SearchReplaceMultiBufferOpen<CR>", "[o]pen" },
+			w = { "<CMD>SearchReplaceMultiBufferCWord<CR>", "[w]ord" },
+			W = { "<CMD>SearchReplaceMultiBufferCWORD<CR>", "[W]ORD" },
+			e = { "<CMD>SearchReplaceMultiBufferCExpr<CR>", "[e]xpr" },
+			f = { "<CMD>SearchReplaceMultiBufferCFile<CR>", "[f]ile" },
+		},
+	}
+	lvim.keys.visual_block_mode["<C-r>"] = [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]]
+	lvim.keys.visual_block_mode["<C-s>"] = [[<CMD>SearchReplaceWithinVisualSelection<CR>]]
+	lvim.keys.visual_block_mode["<C-b>"] = [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]]
+	vim.o.inccommand = "split"
+	-- search.replace.nvim config END
+
+	vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+	vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+	vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+	vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+	vim.keymap.set("n", "B", function()
+		local winid = require("ufo").peekFoldedLinesUnderCursor()
+		if not winid then
+			-- choose one of coc.nvim and nvim lsp
+			vim.lsp.buf.hover()
+		end
+	end)
+end
+set_keymap()
