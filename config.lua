@@ -1216,6 +1216,17 @@ lvim.plugins = {
 		},
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
+    {
+        "junegunn/vim-easy-align",
+        lazy = true,
+        event = { "BufRead", "BufNewFile" },
+        config = function ()
+            vim.cmd([[
+                xmap ga <Plug>(EasyAlign)
+                nmap ga <Plug>(EasyAlign)
+            ]])
+        end
+    },
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
