@@ -16,6 +16,10 @@
                 "path": "./global.json"
             },
             {
+                "language": "json",
+                "path": "./snippets/json.json"
+            },
+            {
                 "language": "python",
                 "path": "./snippets/python.json"
             },
