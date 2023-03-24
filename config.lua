@@ -1238,6 +1238,7 @@ lvim.plugins = {
             vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
             vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
             vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+            vim.keymap.set('n', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
             vim.keymap.set('i', '<c-s>', function() return vim.fn['codeium#Complete']() end, { expr = true })
         end
     },
