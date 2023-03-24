@@ -1227,6 +1227,20 @@ lvim.plugins = {
             ]])
         end
     },
+    {
+        "Exafunction/codeium.vim",
+        lazy = true,
+        event = { "InsertEnter" },
+        cmd = { "Codeium" },
+        config = function ()
+            -- Change '<C-g>' here to any keycode you like.
+            vim.keymap.set('i', '<C-v>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+            vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+            vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+            vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+            vim.keymap.set('i', '<c-s>', function() return vim.fn['codeium#Complete']() end, { expr = true })
+        end
+    },
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
@@ -1297,9 +1311,11 @@ local function set_keymap()
 	keymap["omg"] = { "<cmd>MarksListGlobal<CR>", "Show Marks Global" }
 
 	keymap["ol"] = { "<cmd>e<CR>", "Reload File" }
-	keymap["oc"] = { "<cmd>pwd<CR>", "Show Current Folder" }
+	keymap["of"] = { "<cmd>pwd<CR>", "Show Current Folder" }
 	keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
 	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
+
+    keymap["oc"] = { "<cmd>Codeium Auth<cr>", "Codeium Auth" }
 
 	keymap["oh"] = { name = "+Harpoon" }
 	keymap["ohf"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" }

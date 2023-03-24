@@ -12,6 +12,7 @@
   "cmp-treesitter": { "branch": "master", "commit": "b40178b780d547bcf131c684bc5fd41af17d05f2" },
   "cmp-under-comparator": { "branch": "master", "commit": "6857f10272c3cfe930cece2afa2406e1385bfef8" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
+  "codeium.vim": { "branch": "main", "commit": "0e1af9b7650854e7698054eb1f91cd59ea734ffc" },
   "colorful-winsep.nvim": { "branch": "main", "commit": "7a4dd007aa03bfbf0650b561db795740205114dd" },
   "diffview.nvim": { "branch": "main", "commit": "58035354fc79c6ec42fa7b218dab90bd3968615f" },
   "filetype.nvim": { "branch": "main", "commit": "b522628a45a17d58fc0073ffd64f9dc9530a8027" },
