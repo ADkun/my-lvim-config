@@ -4,10 +4,7 @@ vim.opt.tabstop = 4
 vim.opt.relativenumber = true
 vim.opt.cursorcolumn = true
 
--- nightfox dayfox dawnfox duskfox nordfox terafox carbonfox
--- OceanicNext
 -- onedark onelight onedark_vivid onedark_dark
--- one_monokai
 lvim.colorscheme = "onedark"
 local COLOR_TRANS = false
 
@@ -155,11 +152,8 @@ lvim.plugins = {
 						h = "cpp",
 					},
 					literal = {
-						-- Set the filetype of files named "MyBackupFile" to lua
-						MyBackupFile = "lua",
 					},
 					complex = {
-						-- Set the filetype of any full filename matching the regex to gitconfig
 						[".*git/config"] = "gitconfig", -- Included in the plugin
 					},
 
@@ -170,23 +164,11 @@ lvim.plugins = {
 							-- Remove annoying indent jumping
 							vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
 						end,
-						["pdf"] = function()
-							vim.bo.filetype = "pdf"
-							-- Open in PDF viewer (Skim.app) automatically
-							vim.fn.jobstart("open -a skim " .. '"' .. vim.fn.expand("%") .. '"')
-						end,
 					},
 					function_literal = {
-						Brewfile = function()
-							vim.cmd("syntax off")
-						end,
 					},
 					function_complex = {
-						["*.math_notes/%w+"] = function()
-							vim.cmd("iabbrev $ $$")
-						end,
 					},
-
 					shebang = {
 						-- Set the filetype of files with a dash shebang to sh
 						dash = "sh",
@@ -247,12 +229,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"HiPhish/nvim-ts-rainbow2",
-		-- Bracket pair rainbow colorize
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-	},
-	{
 		"romgrk/nvim-treesitter-context",
 		-- Show context of code such as function name, class name, labels
 		lazy = true,
@@ -310,15 +286,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"folke/todo-comments.nvim",
-		-- HACK, NOTE, TODO, WARNING, BUG, FIX, PREF
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-		config = function()
-			require("todo-comments").setup()
-		end,
-	},
-	{
 		"kylechui/nvim-surround",
 		-- ysiw)  ys$" ds]  cs'" dsf
 		lazy = true,
@@ -334,63 +301,6 @@ lvim.plugins = {
 		cmd = "Spectre",
 		config = function()
 			require("spectre").setup()
-		end,
-	},
-	{
-		"kevinhwang91/nvim-bqf",
-		-- quickfix preview and other functions
-		lazy = true,
-		ft = "qf",
-		config = function()
-			require("bqf").setup({
-				auto_enable = true,
-				auto_resize_height = true,
-				preview = {
-					win_height = 12,
-					win_vheight = 12,
-					delay_syntax = 80,
-					border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-					should_preview_cb = function(bufnr, qwinid)
-						local ret = true
-						local bufname = vim.api.nvim_buf_get_name(bufnr)
-						local fsize = vim.fn.getfsize(bufname)
-						if fsize > 100 * 1024 then
-							-- skip file size greater than 100k
-							ret = false
-						elseif bufname:match("^fugitive://") then
-							-- skip fugitive buffer
-							ret = false
-						end
-						return ret
-					end,
-				},
-				func_map = {
-					drop = "o",
-					openc = "O",
-					split = "<C-s>",
-					tabdrop = "<C-t>",
-					tabc = "",
-					vsplit = "<C-v>",
-					ptogglemode = "z,",
-					stoggleup = "",
-				},
-				filter = {
-					fzf = {
-						action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
-						extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-					},
-				},
-			})
-		end,
-	},
-	{
-		"andymass/vim-matchup",
-		-- Highlight, jump between pairs like if..else
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-		config = function()
-			vim.g.matchup_matchparen_offscreen = { method = "popup" }
-			lvim.builtin.treesitter.matchup.enable = true
 		end,
 	},
 	{
@@ -419,42 +329,6 @@ lvim.plugins = {
 				keys = "<Esc>",
 			})
 		end,
-	},
-	{
-		"abecodes/tabout.nvim",
-		-- Use <Tab> jump out of quotes
-		lazy = true,
-		event = "InsertEnter",
-		config = function()
-			require("tabout").setup({
-				tabkey = "<Tab>",
-				backwards_tabkey = "<S-Tab>",
-				act_as_tab = true,
-				act_as_shift_tab = false,
-				default_tab = "<C-t>",
-				default_shift_tab = "<C-d>",
-				enable_backwards = true,
-				completion = true,
-				tabouts = {
-					{ open = "'", close = "'" },
-					{ open = '"', close = '"' },
-					{ open = "`", close = "`" },
-					{ open = "(", close = ")" },
-					{ open = "[", close = "]" },
-					{ open = "{", close = "}" },
-				},
-				ignore_beginning = true,
-				exclude = {
-					"qf",
-					"NvimTree",
-					"toggleterm",
-					"TelescopePrompt",
-					"alpha",
-					"netrw",
-				},
-			})
-		end,
-		after = { "nvim-cmp" },
 	},
 	{
 		"ibhagwan/smartyank.nvim",
@@ -544,41 +418,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"mhartington/oceanic-next",
-		priority = 1000,
-		lazy = lvim.colorscheme ~= "OceanicNext",
-	},
-	{
-		"EdenEast/nightfox.nvim",
-		priority = 1000,
-		lazy = lvim.colorscheme ~= "nightfox"
-			and lvim.colorscheme ~= "carbonfox"
-			and lvim.colorscheme ~= "nordfox"
-			and lvim.colorscheme ~= "terafox"
-			and lvim.colorscheme ~= "duskfox",
-		config = function()
-			require("nightfox").setup({
-				options = {
-					transparent = COLOR_TRANS,
-					-- styles = {
-					--     comments = "italic",
-					--     keywords = "bold",
-					--     types = "italic,bold",
-					-- }
-				},
-			})
-		end,
-	},
-	{
-		"cpea2506/one_monokai.nvim",
-		lazy = lvim.colorscheme ~= "one_monokai",
-		config = function()
-			require("one_monokai").setup({
-				transparent = COLOR_TRANS,
-			})
-		end,
-	},
-	{
 		"olimorris/onedarkpro.nvim",
 		priority = 1000,
 		lazy = lvim.colorscheme ~= "onedark"
@@ -587,21 +426,6 @@ lvim.plugins = {
 			and lvim.colorscheme ~= "onedark_dark",
 		config = function()
 			require("onedarkpro").setup({
-				-- styles = {
-				-- 	types = "NONE",
-				-- 	methods = "NONE",
-				-- 	numbers = "NONE",
-				-- 	strings = "NONE",
-					-- comments = "italic",
-					-- keywords = "bold,italic",
-				-- 	constants = "NONE",
-				-- 	functions = "italic",
-				-- 	operators = "NONE",
-				-- 	variables = "NONE",
-				-- 	parameters = "NONE",
-				-- 	conditionals = "italic",
-				-- 	virtual_text = "NONE",
-				-- },
                 options = {
                     transparency = COLOR_TRANS,
                     cursorline = true,
@@ -864,14 +688,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"nvim-zh/colorful-winsep.nvim",
-		lazy = true,
-		event = "WinNew",
-		config = function()
-			require("colorful-winsep").setup()
-		end,
-	},
-	{
 		"booperlv/nvim-gomove",
 		lazy = true,
 		event = { "BufRead", "BufNewFile" },
@@ -940,67 +756,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"LeonHeidelbach/trailblazer.nvim",
-		lazy = true,
-		keys = { "<A-s>", "<A-d>" },
-		config = function()
-			-- local HOME = os.getenv("HOME")
-			require("trailblazer").setup({
-				auto_save_trailblazer_state_on_exit = false,
-				auto_load_trailblazer_state_on_enter = false,
-				-- custom_session_storage_dir = HOME .. "/.local/share/trail_blazer_sessions/",
-				trail_options = {
-					mark_symbol = "•", --  will only be used if trail_mark_symbol_line_indicators_enabled = true
-					newest_mark_symbol = "󰝥", -- disable this mark symbol by setting its value to ""
-					cursor_mark_symbol = "󰺕", -- disable this mark symbol by setting its value to ""
-					next_mark_symbol = "󰬦", -- disable this mark symbol by setting its value to ""
-					previous_mark_symbol = "󰬬", -- disable this mark symbol by setting its value to ""
-				},
-				mappings = {
-					nv = {
-						motions = {
-							new_trail_mark = "<A-s>",
-							track_back = "<A-d>",
-							peek_move_next_down = "<A-J>",
-							peek_move_previous_up = "<A-K>",
-							move_to_nearest = "<A-n>",
-							toggle_trail_mark_list = "<A-o>",
-						},
-						actions = {
-							delete_all_trail_marks = "<A-L>",
-							paste_at_last_trail_mark = "<A-p>",
-							paste_at_all_trail_marks = "<A-P>",
-							set_trail_mark_select_mode = "<A-t>",
-							switch_to_next_trail_mark_stack = "<A-.>",
-							switch_to_previous_trail_mark_stack = "<A-,>",
-							set_trail_mark_stack_sort_mode = "<A-S>",
-						},
-					},
-				},
-				quickfix_mappings = { -- rename this to "force_quickfix_mappings" to completely override default mappings and not merge with them
-					-- nv = {
-					-- 	motions = {
-					-- 		qf_motion_move_trail_mark_stack_cursor = "<CR>",
-					-- 	},
-					-- 	actions = {
-					-- 		qf_action_delete_trail_mark_selection = "d",
-					-- 		qf_action_save_visual_selection_start_line = "v",
-					-- 	},
-					-- 	alt_actions = {
-					-- 		qf_action_save_visual_selection_start_line = "V",
-					-- 	},
-					-- },
-					-- v = {
-					-- 	actions = {
-					-- 		qf_action_move_selected_trail_marks_down = "<C-j>",
-					-- 		qf_action_move_selected_trail_marks_up = "<C-k>",
-					-- 	},
-					-- },
-				},
-			})
-		end,
-	},
-	{
 		"chrisgrieser/nvim-recorder",
 		lazy = true,
 		keys = { "q", "Q", "<A-q>", "cq", "yq" },
@@ -1019,139 +774,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"chrisgrieser/nvim-various-textobjs",
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-		config = function()
-			require("various-textobjs").setup({
-				useDefaultKeymaps = true,
-				lookForwardLines = 10,
-			})
-			-- example: `an` for outer subword, `in` for inner subword
-			vim.keymap.set({ "o", "x" }, "aS", function()
-				require("various-textobjs").subword(false)
-			end)
-			vim.keymap.set({ "o", "x" }, "iS", function()
-				require("various-textobjs").subword(true)
-			end)
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-		after = "nvim-treesitter",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				textobjects = {
-					select = {
-						enable = true,
-						lookahead = true,
-						keymaps = {
-							["af"] = "@function.outer",
-							["if"] = "@function.inner",
-							["ac"] = "@class.outer",
-							["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-							["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-							["id"] = "@conditional.inner",
-							["ad"] = "@conditional.outer",
-						},
-						selection_modes = {
-							["@parameter.outer"] = "v", -- charwise
-							["@function.outer"] = "V", -- linewise
-							["@class.outer"] = "<c-v>", -- blockwise
-						},
-						include_surrounding_whitespace = false,
-					},
-					move = {
-						enable = true,
-						set_jumps = true,
-						goto_next_start = {
-							["]m"] = "@function.outer",
-							["]]"] = { query = "@class.outer", desc = "Next class start" },
-							--
-							-- You can use regex matching and/or pass a list in a "query" key to group multiple queires.
-							["]o"] = "@loop.*",
-							-- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-							--
-							-- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-							-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-							["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-							["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-						},
-						goto_next_end = {
-							["]M"] = "@function.outer",
-							["]["] = "@class.outer",
-						},
-						goto_previous_start = {
-							["[m"] = "@function.outer",
-							["[["] = "@class.outer",
-						},
-						goto_previous_end = {
-							["[M"] = "@function.outer",
-							["[]"] = "@class.outer",
-						},
-						-- Below will go to either the start or the end, whichever is closer.
-						-- Use if you want more granular movements
-						-- Make it even more gradual by adding multiple queries and regex.
-						goto_next = {
-							["]d"] = "@conditional.outer",
-						},
-						goto_previous = {
-							["[d"] = "@conditional.outer",
-						},
-					},
-					swap = {
-						enable = false,
-						swap_next = {
-							["<leader>a"] = "@parameter.inner",
-						},
-						swap_previous = {
-							["<leader>A"] = "@parameter.inner",
-						},
-					},
-				},
-			})
-			local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-			-- Repeat movement with ; and ,
-			-- ensure ; goes forward and , goes backward regardless of the last direction
-			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
-
-			-- vim way: ; goes to the direction you were moving.
-			-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-			-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-
-			-- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-			-- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-			-- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-			-- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-			-- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
-		end,
-	},
-	{
-		"RRethy/nvim-treesitter-textsubjects",
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-		after = "nvim-treesitter",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				textsubjects = {
-					enable = true,
-					prev_selection = ",",
-					keymaps = {
-						["."] = "textsubjects-smart",
-						[";"] = "textsubjects-container-outer",
-						["i;"] = "textsubjects-container-inner",
-					},
-				},
-			})
-		end,
-	},
-	{
 		"f-person/git-blame.nvim",
 		lazy = true,
 		cmd = "GitBlameToggle",
@@ -1163,40 +785,6 @@ lvim.plugins = {
 		"tpope/vim-repeat",
 		lazy = true,
 		keys = ".",
-	},
-	{
-		"karb94/neoscroll.nvim",
-		lazy = true,
-		-- event = "WinScrolled",
-		keys = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
-		config = function()
-			require("neoscroll").setup({
-				-- All these keys will be mapped to their corresponding default scrolling animation
-				-- mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
-				hide_cursor = true,
-				stop_eof = true,
-				use_local_scrolloff = false,
-				respect_scrolloff = false,
-				cursor_scrolls_alone = true,
-				-- quadratic, cubic, quartic, quintic, circular, sine
-				easing_function = "cubic",
-				pre_hook = nil,
-				post_hook = nil,
-			})
-
-			local t = {}
-			t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "50", [['cubic']] } }
-			t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "50", [['cubic']] } }
-			t["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] } }
-			t["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] } }
-			t["<C-y>"] = { "scroll", { "-0.10", "false", "50", [['cubic']] } }
-			t["<C-e>"] = { "scroll", { "0.10", "false", "50", [['cubic']] } }
-			t["zt"] = { "zt", { "100", [['cubic']] } }
-			t["zz"] = { "zz", { "100", [['cubic']] } }
-			t["zb"] = { "zb", { "100", [['cubic']] } }
-
-			require("neoscroll.config").set_mappings(t)
-		end,
 	},
 	{
 		"sindrets/diffview.nvim",
@@ -1240,35 +828,6 @@ lvim.plugins = {
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = "zsh",
--- 	callback = function()
--- 		-- let treesitter use bash highlight for zsh files as well
--- 		require("nvim-treesitter.highlight").attach(0, "bash")
--- 	end,
--- })
-
--- vim.api.nvim_create_autocmd({ "ModeChanged" }, {
--- 	callback = function()
--- 		local current_mode = vim.fn.mode()
--- 		if current_mode == "n" then
--- 			vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#8aa872" })
--- 			vim.fn.sign_define("smoothcursor", { text = "" })
--- 		elseif current_mode == "v" then
--- 			vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#bf616a" })
--- 			vim.fn.sign_define("smoothcursor", { text = "" })
--- 		elseif current_mode == "V" then
--- 			vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#bf616a" })
--- 			vim.fn.sign_define("smoothcursor", { text = "" })
--- 		elseif current_mode == "x" then
--- 			vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#bf616a" })
--- 			vim.fn.sign_define("smoothcursor", { text = "" })
--- 		elseif current_mode == "i" then
--- 			vim.api.nvim_set_hl(0, "SmoothCursor", { fg = "#668aab" })
--- 			vim.fn.sign_define("smoothcursor", { text = "" })
--- 		end
--- 	end,
--- })
 
 local function set_keymap()
 	local keymap = lvim.builtin.which_key.mappings
@@ -1287,12 +846,6 @@ local function set_keymap()
 	-- Diagnostic
 	keymap["n"] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" }
 	keymap["v"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" }
-
-	keymap["ot"] = { name = "+Todo" }
-	keymap["otq"] = { "<cmd>TodoQuickFix<cr>", "Todo quickfix" }
-	keymap["otl"] = { "<cmd>TodoLocList<cr>", "Todo loclist" }
-	keymap["ott"] = { "<cmd>TodoTelescope<cr>", "Todo Telescope" }
-	keymap["otT"] = { "<cmd>TodoTrouble<cr>", "Todo Trouble" }
 
 	keymap["on"] = { name = "+Notify" }
 	keymap["onn"] = { "<cmd>Notifications<cr>", "Show Notifications" }
