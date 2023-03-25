@@ -1,5 +1,11 @@
 # Introduce of this repository
 
+## Related repository
+
+[my-lvim-mainfile](https://github.com/ADkun/my-lvim-mainfile)
+
+The repository is a fork of LunarVim, located at `~/.local/share/lunarvim/lvim`
+
 ## Basic
 
 This is a repository of `LunarVim` configuration directory.
