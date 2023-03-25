@@ -273,11 +273,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"JoosepAlviste/nvim-ts-context-commentstring",
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-	},
-	{
 		"rmagatti/goto-preview",
 		lazy = true,
 		keys = "gp",
