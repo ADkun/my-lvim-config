@@ -133,10 +133,6 @@ linters.setup({
 		command = "markdownlint",
 		filetypes = { "markdown", "md" },
 	},
-	-- {
-	-- 	command = "cpplint",
-	-- 	filetypes = { "cpp", "c" },
-	-- },
 })
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
@@ -340,15 +336,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"cpea2506/one_monokai.nvim",
-		lazy = lvim.colorscheme ~= "one_monokai",
-		config = function()
-			require("one_monokai").setup({
-				transparent = COLOR_TRANS,
-			})
-		end,
-	},
-	{
 		"olimorris/onedarkpro.nvim",
 		priority = 1000,
 		lazy = lvim.colorscheme ~= "onedark"
@@ -547,14 +534,6 @@ lvim.plugins = {
 					-- addBreakPoint = "##",
 				},
 			})
-		end,
-	},
-	{
-		"f-person/git-blame.nvim",
-		lazy = true,
-		cmd = "GitBlameToggle",
-		config = function()
-			vim.cmd("highlight default link gitblame SpecialComment")
 		end,
 	},
 	{
