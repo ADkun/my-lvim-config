@@ -152,6 +152,7 @@ lvim.plugins = {
 						h = "cpp",
 					},
 					literal = {
+                        
 					},
 					complex = {
 						[".*git/config"] = "gitconfig", -- Included in the plugin
@@ -435,6 +436,7 @@ lvim.plugins = {
 	},
 	{
 		"rcarriga/nvim-notify",
+        enabled = false,
 		lazy = true,
 		-- event = "VeryLazy",
 		config = function()
@@ -459,11 +461,8 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"MunifTanjim/nui.nvim",
-		lazy = true,
-	},
-	{
 		"folke/noice.nvim",
+        enabled = false,
 		lazy = true,
 		event = { "BufRead", "BufNewFile" },
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
