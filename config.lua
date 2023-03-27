@@ -93,7 +93,7 @@ lvim.builtin.treesitter.ensure_installed = {
 -- 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
-lvim.builtin.treesitter.rainbow.enable = true
+-- lvim.builtin.treesitter.rainbow.enable = true
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
@@ -1080,9 +1080,6 @@ lvim.plugins = {
 							["[F"] = "@function.outer",
 							["[]"] = "@class.outer",
 						},
-						-- Below will go to either the start or the end, whichever is closer.
-						-- Use if you want more granular movements
-						-- Make it even more gradual by adding multiple queries and regex.
 						goto_next = {
 							["]d"] = "@conditional.outer",
 						},
@@ -1102,22 +1099,14 @@ lvim.plugins = {
 				},
 			})
 			local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-			-- Repeat movement with ; and ,
-			-- ensure ; goes forward and , goes backward regardless of the last direction
 			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
 			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
-
-			-- vim way: ; goes to the direction you were moving.
-			-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-			-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-
-			-- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-			-- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-			-- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-			-- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-			-- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 		end,
+	},
+	{
+		"HiPhish/nvim-ts-rainbow2",
+		lazy = true,
+		event = { "BufRead", "BufNewFile" },
 	},
 }
 
