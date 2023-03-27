@@ -8,7 +8,7 @@ vim.opt.cursorcolumn = true
 -- OceanicNext
 -- onedark onelight onedark_vivid onedark_dark
 -- one_monokai
-lvim.colorscheme = "onedark"
+lvim.colorscheme = "catppuccin"
 local COLOR_TRANS = false
 
 -- general
@@ -575,6 +575,39 @@ lvim.plugins = {
 		config = function()
 			require("one_monokai").setup({
 				transparent = COLOR_TRANS,
+			})
+		end,
+	},
+	{
+		"catppuccin/nvim",
+		priority = 1000,
+		lazy = lvim.colorscheme ~= "catppuccin",
+		config = function()
+			require("catppuccin").setup({
+				flavour = "mocha",
+				transparent_background = COLOR_TRANS,
+				term_colors = true,
+				no_italic = true,
+				no_bold = true,
+				integrations = {
+					cmp = true,
+					gitsigns = true,
+					nvimtree = true,
+					telescope = true,
+					hop = true,
+					leap = true,
+					mason = true,
+					dap = true,
+					navic = true,
+					symbols_outline = true,
+					lsp_trouble = true,
+					which_key = true,
+                    treesitter = true,
+                    notify = true,
+                    noice = true,
+                    harpoon = true,
+                    ts_rainbow2 = true,
+				},
 			})
 		end,
 	},
