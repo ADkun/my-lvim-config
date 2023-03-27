@@ -452,6 +452,7 @@ lvim.plugins = {
 					lsp_trouble = true,
 					which_key = true,
                     treesitter = true,
+                    harpoon = true,
 				},
 			})
 		end,
