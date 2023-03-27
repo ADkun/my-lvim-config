@@ -458,6 +458,7 @@ lvim.plugins = {
 	},
 	{
 		"rcarriga/nvim-notify",
+        enabled = false,
 		lazy = true,
 		-- event = "VeryLazy",
 		config = function()
@@ -881,10 +882,10 @@ local function set_keymap()
 
 	keymap["on"] = { name = "+Notify" }
 	keymap["onn"] = { "<cmd>Notifications<cr>", "Show Notifications" }
-	keymap["ont"] = { "<cmd>Noice telescope<cr>", "Show Notifications in Telescope" }
+	-- keymap["ont"] = { "<cmd>Noice telescope<cr>", "Show Notifications in Telescope" }
 	keymap["onm"] = { "<cmd>messages<cr>", "Show Messages" }
-	keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
-	keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
+	-- keymap["ond"] = { "<cmd>NoiceDisable<cr>", "Noice Disable" }
+	-- keymap["one"] = { "<cmd>NoiceEnable<cr>", "Noice Enable" }
 
 	keymap["om"] = { name = "+Marks" }
 	keymap["oma"] = { "<cmd>MarksListAll<CR>", "Show All Marks" }
