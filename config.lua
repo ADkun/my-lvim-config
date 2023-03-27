@@ -451,6 +451,7 @@ lvim.plugins = {
 					which_key = true,
 					treesitter = true,
 					harpoon = true,
+                    ts_rainbow2 = true,
 				},
 			})
 		end,
