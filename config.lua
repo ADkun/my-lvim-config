@@ -5,7 +5,8 @@ vim.opt.relativenumber = true
 vim.opt.cursorcolumn = true
 
 -- onedark onelight onedark_vivid onedark_dark
-lvim.colorscheme = "onedark"
+-- one_monokai
+lvim.colorscheme = "catppuccin"
 local COLOR_TRANS = false
 
 -- general
@@ -24,7 +25,6 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = "<cmd>w<cr>"
 lvim.keys.normal_mode["<S-l>"] = "<cmd>BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<CR>"
-
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -151,9 +151,7 @@ lvim.plugins = {
 						pn = "potion",
 						h = "cpp",
 					},
-					literal = {
-                        
-					},
+					literal = {},
 					complex = {
 						[".*git/config"] = "gitconfig", -- Included in the plugin
 					},
@@ -217,12 +215,7 @@ lvim.plugins = {
 		lazy = true,
 		keys = { "r" },
 		config = function()
-			require("hop").setup({
-				-- keys = "etovxqpdygfblzhckisuran",
-				-- uppercase_labels = true,
-				-- hint_position = require("hop.hint").HintPosition.MIDDLE,
-			})
-			-- vim.api.nvim_set_keymap("n", "R", "<cmd>HopChar2<cr>", { silent = true })
+			require("hop").setup({})
 			vim.api.nvim_set_keymap("n", "r", "<cmd>HopChar1<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "W", "<cmd>HopWord<cr>", { silent = true })
 			-- vim.api.nvim_set_keymap("n", "W", "<cmd>HopLine<cr>", { silent = true })
@@ -427,37 +420,40 @@ lvim.plugins = {
 			and lvim.colorscheme ~= "onedark_dark",
 		config = function()
 			require("onedarkpro").setup({
-                options = {
-                    transparency = COLOR_TRANS,
-                    cursorline = true,
-                }
+				options = {
+					transparency = COLOR_TRANS,
+					cursorline = true,
+				},
 			})
 		end,
 	},
 	{
-		"rcarriga/nvim-notify",
-        enabled = false,
-		lazy = true,
-		-- event = "VeryLazy",
+		"catppuccin/nvim",
+		priority = 1000,
+		lazy = lvim.colorscheme ~= "catppuccin",
 		config = function()
-			local notify = require("notify")
-			notify.setup({
-				-- "fade", "slide", "fade_in_slide_out", "static"
-				stages = "static",
-				on_open = nil,
-				on_close = nil,
-				timeout = 3000,
-				fps = 1,
-				render = "default",
-				background_colour = "Normal",
-				max_width = math.floor(vim.api.nvim_win_get_width(0) / 2),
-				max_height = math.floor(vim.api.nvim_win_get_height(0) / 4),
-				-- minimum_width = 50,
-				-- ERROR > WARN > INFO > DEBUG > TRACE
-				level = "TRACE",
+			require("catppuccin").setup({
+				flavour = "mocha",
+				transparent_background = COLOR_TRANS,
+				term_colors = true,
+				no_italic = true,
+				no_bold = true,
+				integrations = {
+					cmp = true,
+					gitsigns = true,
+					nvimtree = true,
+					telescope = true,
+					hop = true,
+					leap = true,
+					mason = true,
+					dap = true,
+					navic = true,
+					symbols_outline = true,
+					lsp_trouble = true,
+					which_key = true,
+                    treesitter = true,
+				},
 			})
-
-			vim.notify = notify
 		end,
 	},
 	{
@@ -798,32 +794,44 @@ lvim.plugins = {
 		},
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
-    {
-        "junegunn/vim-easy-align",
-        lazy = true,
-        event = { "BufRead", "BufNewFile" },
-        config = function ()
-            vim.cmd([[
+	{
+		"junegunn/vim-easy-align",
+		lazy = true,
+		event = { "BufRead", "BufNewFile" },
+		config = function()
+			vim.cmd([[
                 xmap ga <Plug>(EasyAlign)
                 nmap ga <Plug>(EasyAlign)
             ]])
-        end
-    },
-    {
-        "Exafunction/codeium.vim",
-        lazy = true,
-        event = { "InsertEnter" },
-        cmd = { "Codeium" },
-        config = function ()
-            -- Change '<C-g>' here to any keycode you like.
-            vim.keymap.set('i', '<C-v>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-            vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-            vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-            vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
-            vim.keymap.set('n', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
-            vim.keymap.set('i', '<c-s>', function() return vim.fn['codeium#Complete']() end, { expr = true })
-        end
-    },
+		end,
+	},
+	{
+		"Exafunction/codeium.vim",
+		lazy = true,
+		event = { "InsertEnter" },
+		cmd = { "Codeium" },
+		config = function()
+			-- Change '<C-g>' here to any keycode you like.
+			vim.keymap.set("i", "<C-v>", function()
+				return vim.fn["codeium#Accept"]()
+			end, { expr = true })
+			vim.keymap.set("i", "<c-;>", function()
+				return vim.fn["codeium#CycleCompletions"](1)
+			end, { expr = true })
+			vim.keymap.set("i", "<c-,>", function()
+				return vim.fn["codeium#CycleCompletions"](-1)
+			end, { expr = true })
+			vim.keymap.set("i", "<c-x>", function()
+				return vim.fn["codeium#Clear"]()
+			end, { expr = true })
+			vim.keymap.set("n", "<c-x>", function()
+				return vim.fn["codeium#Clear"]()
+			end, { expr = true })
+			vim.keymap.set("i", "<c-s>", function()
+				return vim.fn["codeium#Complete"]()
+			end, { expr = true })
+		end,
+	},
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
@@ -863,7 +871,7 @@ local function set_keymap()
 	keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
 	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
 
-    keymap["oc"] = { "<cmd>Codeium Auth<cr>", "Codeium Auth" }
+	keymap["oc"] = { "<cmd>Codeium Auth<cr>", "Codeium Auth" }
 
 	keymap["oh"] = { name = "+Harpoon" }
 	keymap["ohf"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" }

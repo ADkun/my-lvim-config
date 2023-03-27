@@ -34,6 +34,7 @@
   "neodim": { "branch": "master", "commit": "1bdb479684cccb845328704b121bf12c9ce09cc7" },
   "nlsp-settings.nvim": { "branch": "main", "commit": "1b9fed5dec33c6c731dc8ff91d337091930474be" },
   "null-ls.nvim": { "branch": "main", "commit": "ccd6cb05b176bff65819c85b8d29096b5e0750d4" },
+  "nvim": { "branch": "main", "commit": "dc216c6241fd8439fe6018cca834200aca1a04ad" },
   "nvim-autopairs": { "branch": "master", "commit": "e755f366721bc9e189ddecd39554559045ac0a18" },
   "nvim-cmp": { "branch": "main", "commit": "feed47fd1da7a1bad2c7dca456ea19c8a5a9823a" },
   "nvim-dap": { "branch": "master", "commit": "73196075627a4f079c62b0dd4aff8ce0a1b7cf57" },
