@@ -164,10 +164,8 @@ lvim.plugins = {
 							vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
 						end,
 					},
-					function_literal = {
-					},
-					function_complex = {
-					},
+					function_literal = {},
+					function_complex = {},
 					shebang = {
 						-- Set the filetype of files with a dash shebang to sh
 						dash = "sh",
@@ -451,15 +449,15 @@ lvim.plugins = {
 					symbols_outline = true,
 					lsp_trouble = true,
 					which_key = true,
-                    treesitter = true,
-                    harpoon = true,
+					treesitter = true,
+					harpoon = true,
 				},
 			})
 		end,
 	},
 	{
 		"rcarriga/nvim-notify",
-        enabled = false,
+		enabled = false,
 		lazy = true,
 		-- event = "VeryLazy",
 		config = function()
@@ -485,7 +483,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/noice.nvim",
-        enabled = false,
+		enabled = false,
 		lazy = true,
 		event = { "BufRead", "BufNewFile" },
 		dependencies = { "rcarriga/nvim-notify", "MunifTanjim/nui.nvim" },
@@ -857,6 +855,268 @@ lvim.plugins = {
 			vim.keymap.set("i", "<c-s>", function()
 				return vim.fn["codeium#Complete"]()
 			end, { expr = true })
+		end,
+	},
+	{
+		"kevinhwang91/nvim-bqf",
+		-- quickfix preview and other functions
+		lazy = true,
+		ft = "qf",
+		config = function()
+			require("bqf").setup({
+				auto_enable = true,
+				auto_resize_height = true,
+				preview = {
+					win_height = 12,
+					win_vheight = 12,
+					delay_syntax = 80,
+					border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+					should_preview_cb = function(bufnr, qwinid)
+						local ret = true
+						local bufname = vim.api.nvim_buf_get_name(bufnr)
+						local fsize = vim.fn.getfsize(bufname)
+						if fsize > 100 * 1024 then
+							-- skip file size greater than 100k
+							ret = false
+						elseif bufname:match("^fugitive://") then
+							-- skip fugitive buffer
+							ret = false
+						end
+						return ret
+					end,
+				},
+				func_map = {
+					drop = "o",
+					openc = "O",
+					split = "<C-s>",
+					tabdrop = "<C-t>",
+					tabc = "",
+					vsplit = "<C-v>",
+					ptogglemode = "z,",
+					stoggleup = "",
+				},
+				filter = {
+					fzf = {
+						action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
+						extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+					},
+				},
+			})
+		end,
+	},
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		lazy = true,
+		event = { "BufRead", "BufNewFile" },
+		config = function()
+			require("various-textobjs").setup({
+				useDefaultKeymaps = false,
+				lookForwardLines = 10,
+			})
+			local keymap = vim.keymap.set
+			local vt = require("various-textobjs") -- inline this for lazy-loading
+
+			keymap({ "o", "x" }, "ii", function()
+				vt.indentation(true, true)
+			end)
+			keymap({ "o", "x" }, "ai", function()
+				vt.indentation(false, true)
+			end)
+			keymap({ "o", "x" }, "iI", function()
+				vt.indentation(true, true)
+			end)
+			keymap({ "o", "x" }, "aI", function()
+				vt.indentation(false, false)
+			end)
+
+			keymap({ "o", "x" }, "iS", function()
+				vt.subword(true)
+			end)
+			keymap({ "o", "x" }, "aS", function()
+				vt.subword(false)
+			end)
+
+            -- BUG: This has bugs
+			-- keymap({ "o", "x" }, "YOUR_MAPPING", function()
+			-- 	vt.toNextClosingBracket()
+			-- end)
+
+			keymap({ "o", "x" }, "r", function()
+				vt.restOfParagraph()
+			end)
+
+			keymap({ "o", "x" }, "gG", function()
+				vt.entireBuffer()
+			end)
+
+			keymap({ "o", "x" }, "n", function()
+				vt.nearEoL()
+			end)
+
+			keymap({ "o", "x" }, "il", function()
+				vt.lineCharacterwise()
+			end)
+
+			keymap({ "o", "x" }, "|", function()
+				vt.column()
+			end)
+
+			keymap({ "o", "x" }, "iv", function()
+				vt.value(true)
+			end)
+			keymap({ "o", "x" }, "av", function()
+				vt.value(false)
+			end)
+
+			keymap({ "o", "x" }, "ik", function()
+				vt.key(true)
+			end)
+			keymap({ "o", "x" }, "ak", function()
+				vt.key(false)
+			end)
+
+			keymap({ "o", "x" }, "L", function()
+				vt.url()
+			end)
+
+			keymap({ "o", "x" }, "!", function()
+				vt.diagnostic()
+			end)
+
+			--------------------------------------------------------------------------------------
+			-- put these into the ftplugins or autocms for the filetypes you want to use them with
+
+			keymap({ "o", "x" }, "il", function()
+				vt.mdlink(true)
+			end, { buffer = true })
+			keymap({ "o", "x" }, "al", function()
+				vt.mdlink(false)
+			end, { buffer = true })
+
+			keymap({ "o", "x" }, "iC", function()
+				vt.mdFencedCodeBlock(true)
+			end, { buffer = true })
+			keymap({ "o", "x" }, "aC", function()
+				vt.mdFencedCodeBlock(false)
+			end, { buffer = true })
+
+			-- keymap({ "o", "x" }, "YOUR_MAPPING", function()
+			-- 	vt.cssSelector(true)
+			-- end, { buffer = true })
+			-- keymap({ "o", "x" }, "YOUR_MAPPING", function()
+			-- 	vt.cssSelector(false)
+			-- end, { buffer = true })
+
+			keymap({ "o", "x" }, "ix", function()
+				vt.htmlAttribute(true)
+			end, { buffer = true })
+			keymap({ "o", "x" }, "ax", function()
+				vt.htmlAttribute(false)
+			end, { buffer = true })
+
+			keymap({ "o", "x" }, "iD", function()
+				vt.doubleSquareBrackets(true)
+			end, { buffer = true })
+			keymap({ "o", "x" }, "aD", function()
+				vt.doubleSquareBrackets(false)
+			end, { buffer = true })
+
+			keymap({ "o", "x" }, "iP", function()
+				vt.shellPipe(true)
+			end, { buffer = true })
+			keymap({ "o", "x" }, "aP", function()
+				vt.shellPipe(false)
+			end, { buffer = true })
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		lazy = true,
+		event = { "BufRead", "BufNewFile" },
+		after = "nvim-treesitter",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				textobjects = {
+					select = {
+						enable = true,
+						lookahead = true,
+						keymaps = {
+							["af"] = "@function.outer",
+							["if"] = "@function.inner",
+							["ac"] = "@class.outer",
+							["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+							["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+							["id"] = "@conditional.inner",
+							["ad"] = "@conditional.outer",
+						},
+						selection_modes = {
+							["@parameter.outer"] = "v", -- charwise
+							["@function.outer"] = "V", -- linewise
+							["@class.outer"] = "<c-v>", -- blockwise
+						},
+						include_surrounding_whitespace = false,
+					},
+					move = {
+						enable = true,
+						set_jumps = true,
+						goto_next_start = {
+							["]f"] = "@function.outer",
+							["]]"] = { query = "@class.outer", desc = "Next class start" },
+							-- ["]o"] = "@loop.*",
+							-- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+							["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+							["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+						},
+						goto_next_end = {
+							["]F"] = "@function.outer",
+							["]["] = "@class.outer",
+						},
+						goto_previous_start = {
+							["[f"] = "@function.outer",
+							["[["] = "@class.outer",
+						},
+						goto_previous_end = {
+							["[F"] = "@function.outer",
+							["[]"] = "@class.outer",
+						},
+						-- Below will go to either the start or the end, whichever is closer.
+						-- Use if you want more granular movements
+						-- Make it even more gradual by adding multiple queries and regex.
+						goto_next = {
+							["]d"] = "@conditional.outer",
+						},
+						goto_previous = {
+							["[d"] = "@conditional.outer",
+						},
+					},
+					swap = {
+						enable = false,
+						swap_next = {
+							["<leader>a"] = "@parameter.inner",
+						},
+						swap_previous = {
+							["<leader>A"] = "@parameter.inner",
+						},
+					},
+				},
+			})
+			local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+
+			-- Repeat movement with ; and ,
+			-- ensure ; goes forward and , goes backward regardless of the last direction
+			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+			-- vim way: ; goes to the direction you were moving.
+			-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+			-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
+			-- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+			-- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+			-- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+			-- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+			-- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 		end,
 	},
 }
