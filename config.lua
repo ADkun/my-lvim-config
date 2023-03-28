@@ -853,7 +853,7 @@ lvim.plugins = {
 			vim.keymap.set("n", "<c-x>", function()
 				return vim.fn["codeium#Clear"]()
 			end, { expr = true })
-			vim.keymap.set("i", "<c-s>", function()
+			vim.keymap.set("i", "<c-g>", function()
 				return vim.fn["codeium#Complete"]()
 			end, { expr = true })
 		end,
@@ -1032,8 +1032,9 @@ lvim.plugins = {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
+        enabled = false,
 		lazy = true,
-		event = { "BufRead", "BufNewFile" },
+		-- event = { "BufRead", "BufNewFile" },
 		after = "nvim-treesitter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
