@@ -1110,6 +1110,25 @@ lvim.plugins = {
 		lazy = true,
 		event = { "BufRead", "BufNewFile" },
 	},
+    {
+        "tzachar/cmp-tabnine",
+        build = "./install.sh",
+        lazy = true,
+        event = "InsertEnter",
+        dependencies = "hrsh7th/nvim-cmp",
+        config = function ()
+            local tabnine = require('cmp_tabnine.config')
+            tabnine:setup({
+                max_lines = 500,
+                max_num_results = 5,
+                sort = true,
+                run_on_every_keystroke = true,
+                snippet_placeholder = '~',
+                ignored_file_types = {},
+                show_prediction_strength = false
+            })
+        end
+    },
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
