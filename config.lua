@@ -114,10 +114,10 @@ formatters.setup({
 		command = "markdownlint",
 		filetypes = { "markdown", "md" },
 	},
-	{
-		command = "rustfmt",
-		filetypes = { "rust" },
-	},
+	-- {
+	-- 	command = "rustfmt",
+	-- 	filetypes = { "rust" },
+	-- },
 })
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
@@ -1147,7 +1147,9 @@ local function set_keymap()
 	keymap["oo"] = { "<cmd>SymbolsOutline<cr>", "Toggle Symbols Outline" }
 	keymap["oi"] = { "<cmd>LspInstall<cr>", "LspInstall" }
 
-	keymap["oc"] = { "<cmd>Codeium Auth<cr>", "Codeium Auth" }
+	keymap["oca"] = { "<cmd>Codeium Auth<cr>", "Codeium Auth" }
+    keymap["occ"] = { "<cmd>cd ..<cr>", "cd parent" }
+    keymap["ocd"] = { ":cd ", "cd to" }
 
 	keymap["oh"] = { name = "+Harpoon" }
 	keymap["ohf"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" }
