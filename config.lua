@@ -93,7 +93,6 @@ lvim.builtin.treesitter.ensure_installed = {
 -- 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- lvim.builtin.treesitter.rainbow.enable = true
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
@@ -114,6 +113,10 @@ formatters.setup({
 	{
 		command = "markdownlint",
 		filetypes = { "markdown", "md" },
+	},
+	{
+		command = "rustfmt",
+		filetypes = { "rust" },
 	},
 })
 local linters = require("lvim.lsp.null-ls.linters")
@@ -451,7 +454,7 @@ lvim.plugins = {
 					which_key = true,
 					treesitter = true,
 					harpoon = true,
-                    ts_rainbow2 = true,
+					ts_rainbow2 = true,
 				},
 			})
 		end,
@@ -937,7 +940,7 @@ lvim.plugins = {
 				vt.subword(false)
 			end)
 
-            -- BUG: This has bugs
+			-- BUG: This has bugs
 			-- keymap({ "o", "x" }, "YOUR_MAPPING", function()
 			-- 	vt.toNextClosingBracket()
 			-- end)
@@ -1032,7 +1035,7 @@ lvim.plugins = {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-        enabled = false,
+		enabled = false,
 		lazy = true,
 		-- event = { "BufRead", "BufNewFile" },
 		after = "nvim-treesitter",
@@ -1105,30 +1108,6 @@ lvim.plugins = {
 			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 		end,
 	},
-	{
-		"HiPhish/nvim-ts-rainbow2",
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
-	},
-    {
-        "tzachar/cmp-tabnine",
-        build = "./install.sh",
-        lazy = true,
-        event = "InsertEnter",
-        dependencies = "hrsh7th/nvim-cmp",
-        config = function ()
-            local tabnine = require('cmp_tabnine.config')
-            tabnine:setup({
-                max_lines = 1000,
-                max_num_results = 3,
-                sort = true,
-                run_on_every_keystroke = true,
-                snippet_placeholder = '~',
-                ignored_file_types = {},
-                show_prediction_strength = false
-            })
-        end
-    },
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
